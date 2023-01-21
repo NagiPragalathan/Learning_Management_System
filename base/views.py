@@ -43,7 +43,10 @@ def home(request):
     
 
 def add_faculty(request):
-    return render(request,"admin/Admin_page_to_add_Facuilty.html")
+    facultys = Faculty_details.objects.all()
+    for i in facultys:
+        print(i.name)
+    return render(request,"admin/Admin_page_to_add_Facuilty.html",{'users':facultys})
 
 def add_usr(request):
     usr_name = request.POST.get('user_name')

@@ -14,6 +14,7 @@ urlpatterns = [
     path('delete_member/', views.deleteMember),
 
     path('login',views.login_page),
+    path('login_to_home',views.login_into_home),
 
 
     path('add_Faculty',views.add_faculty),

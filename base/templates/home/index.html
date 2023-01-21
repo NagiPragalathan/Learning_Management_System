@@ -630,6 +630,246 @@ https://templatemo.com/tm-565-onix-digital
     </div>
   </div>
 
+
+
+
+
+
+  <div id="blog" class="our-blog section">
+    <div class="container" style="    margin-top: 77px;>
+      <div class="row">
+        <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
+          <div class="section-heading">
+            <h2 style="margin-bottom: 67px;">Here is your Profile<em> You can</em> Edit the  <span>profile</span></h2>
+          </div>
+          <div class="container emp-profile" style="width:175%;">
+            <form method="#" style="margin-left: 0px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img style="margin-right: 46%;margin-bottom: 10%;width: 41%;border-radius: 13px;" src="{{ detials.image.url }}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                      {{ detials.name }}
+                                    </h5>
+                                    <h6>
+                                      {% if detials.role.role == 2 %}
+                                            {{ "HOD" }} of {{ detials.department }}
+                                      {% else %}
+                                            {{"Staff"}} of {{ detials.department }}
+                                      {% endif %}
+                                    </h6>
+                                    <p class="proile-rating">Date of join : <span>{{ detials.date_of_join }}</span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="profile-edit-btn" name="btnAddMore" style="width: 123px;height: 42px;"><a href="#contact"  style="color: black;">Edit Profile</a></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>WORK LINK</p>
+                            <a href="">Website Link</a><br/>
+                            <a href="">Bootsnipp Profile</a><br/>
+                            <a href="">Bootply Profile</a>
+                            <p>SKILLS</p>
+                            <a href="">Web Designer</a><br/>
+                            <a href="">Web Developer</a><br/>
+                            <a href="">WordPress</a><br/>
+                            <a href="">WooCommerce</a><br/>
+                            <a href="">PHP, .Net</a><br/>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>ID Card Number</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ detials.id_number }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ detials.name }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ detials.role.mail_id }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Designation</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ detials.designation }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Department</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ detials.department }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                              <label>date of join</label>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <p>{{ detials.date_of_join }}</p>
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Qualififcation</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ detials.qualififcation }}</p>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Assessment Period</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ detials.assessment_period }}</p>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Experience</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ detials.experience }}</p>
+                                        </div>
+                                      </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+        </div>
+    </div>
+  </div>
+  <br><br>
+  <div id="contact" class="contact-us section" >
+    <div class="container" style="    margin-top: 77px;">
+      <div class="row" style="    margin-top: 57px;">
+        <div class="col-lg-6 align-self-center wow fadeInLeft" style="width: 76%;" data-wow-duration="0.5s" data-wow-delay="0.25s">
+          <div class="section-heading">
+            <h2>Anyhow, your details can be respected here ! </h2>
+            <h4>Jaya Engineering College</h4>
+            <p>Approved by AICTE, New Delhi, Affilliated to Anna University, Chennai
+              A Telugu Minority Institute</p>
+            <p>CTH Road, Prakash Nagar, Thiruninravur, Chennai, Tamil Nadu 602024<br/>
+              <b>Email</b> : admission@jec.ac.in, info@jec.ac.in<br/>
+              <b>Group Website</b> : www.jayagc.org | Fax: +91-44-5212 3995</p>
+            <div class="phone-info">
+              <h4>Phone : <span><i class="fa fa-phone"></i> <a href="#"> 044-26300982, 26341264, 26390041.</a></span></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.25s">
+          <form id="contact" style="margin-left: 0px;" action="personal_detials" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-lg-6">
+                <fieldset>
+                  <input type="name" name="F_name" id="F_name" placeholder="Name" autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-6">
+                <fieldset>
+                  <input type="surname" name="surname" id="surname" placeholder="Surname" autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="idcard" id="idcard" placeholder="ID Card Number" autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="department" id="department" placeholder="department" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="designation" id="designation" placeholder="designation" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="date" name="date" id="date" placeholder="date of join" autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="qualififcation" id="qualififcation" placeholder="qualififcation" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="AP" id="AP" placeholder="assessment period" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="experience" id="experience" placeholder="experience" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="text" name="about" id="abt" placeholder="bio" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="file" name="file_upload" id="file_upload" placeholder="image" required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <input type="submit" style="background-color: #ff1111c2;color: aliceblue;" value="Update detials" id="form-submit" class="main-button ">
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
   <div id="contact" class="contact-us section">
     <div class="container">
       <div class="row">
