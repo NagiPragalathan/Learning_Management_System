@@ -6,21 +6,24 @@ from agora_token_builder import RtcTokenBuilder
 from .models import RoomMember
 import json
 from django.views.decorators.csrf import csrf_exempt
-
+from .models import Faculty_details
 
 
 # Create your views here.
 
+def home(request):
+    return render(request,"home/index.html")
+    
+
+def add_faculty(request):
+    return render(request,"admin/Admin_page_to_add_Facuilty.html")
 
 
-
-
-
-
-
-
-
-
+def add_facu(request):
+    facultys = Faculty_details.objects.all()
+    for i in facultys:
+        print(i.name)
+    return render(request,"dashboard/tables.html",{'users':facultys})
 
 
 # Video chat ....
