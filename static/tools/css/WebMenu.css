@@ -1,0 +1,114 @@
+.body{
+    background : white;
+    background-image: url("hand.jpg");
+    /* background-size: cover; */
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    border: 2px solid #e3d3d32e;
+    padding: 8px;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: #fffdfd33;
+    width: 46%;
+    height: 56%;
+    display: flex;
+    box-shadow: 6px 6px 20px 9px #26242430;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5%;
+}
+.list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: flex-start;
+    align-items: center;
+}
+.list li{
+    margin-bottom: 2px;
+    background-color: #ffffff87;
+    width: 484%;
+    display: flex;
+    border: 2px solid #a0a0a0;
+    border-radius: 23px;
+    height: 35px;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.item{
+    visibility:visible;
+}
+.item a{
+    text-decoration: none;
+}
+.item:hover{
+    background-color: #22aeffba;
+    border: 2px solid #6161618e;
+    transition: 1s;
+}
+.join1{
+    display: flex;
+    width: 79%;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 0%;
+    align-items: center;
+    border-radius: 38px;
+    overflow-x: auto;
+    border: 2px solid #d1d1d17a;
+    background-color: #95959514;
+}
+.join1::-webkit-scrollbar{
+    background-color: #f3ecec14;
+    border-radius: 9px;
+    width: 5px;
+    height: 5px
+}
+.box::-webkit-scrollbar{
+    background-color: #f3ecec14;
+    border-radius: 9px;
+    width: 5px;
+    height: 5px
+}
+.box::-webkit-scrollbar-thumb{
+    background-color: #003d55fd;
+    border-radius: 500px;
+}
+.join1::-webkit-scrollbar-thumb{
+    background-color: #0e0036;
+    border-radius: 500px;
+}
+.item1{
+    list-style: none;
+    margin-left: 13px;
+    border: 2px solid #77777763;
+    background-color: #ebf5f587;
+    width: fit-content;
+    padding: 11px;
+    border-radius: 23px;
+}
+.item1:hover{
+    background-color: #22aeffba;
+    border: 2px solid #6161618e;
+    transition: 1s;
+}
+.item1 a{
+    text-decoration: none;
+}
+.join{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 395%;
+}

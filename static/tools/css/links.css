@@ -1,0 +1,79 @@
+.home{
+    width: 100%;
+    height: 105%;
+    overflow: hidden;
+}
+.myvideo{
+    position:fixed;
+    min-width: 100%;
+    min-height: 100%;
+    right: 0;
+    bottom: 0;
+}
+.menu{
+    position: fixed;
+    width: 100%;
+    display: flex;
+    height: 64px;
+    margin: -9px;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 3;
+}
+.list{
+    display: flex;
+    list-style: none;
+}
+.list li{
+    height: 46px;
+    bottom: 0px;
+    width: 86px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.list li:hover{
+    background-color: #a1a4a7;
+    transition: 2s;
+    border-radius: 30px;
+}
+.list a:hover{
+    color: black;
+}
+.list a{
+    color: aliceblue;
+    text-decoration: none;
+}
+.container{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 46px;   
+}
+.links{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-top: 139px;
+    flex-wrap: wrap;
+}
+iframe{
+    margin: 10px;
+}
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
