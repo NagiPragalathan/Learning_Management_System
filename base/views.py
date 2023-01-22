@@ -11,6 +11,10 @@ from .models import Faculty_details, Users
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import datetime
+import openai
+from django.shortcuts import render, redirect
+from .models import Room, Message
+from django.http import HttpResponse, JsonResponse
 
 
 # Create your views here.
@@ -179,3 +183,119 @@ def deleteMember(request):
     )
     member.delete()
     return JsonResponse('Member deleted', safe=False)
+
+def gpt(queary):
+    openai.api_key = "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"
+
+    response = openai.Completion.create(
+    model="text-davinci-003",
+    prompt=queary,
+    temperature=0.5,
+    max_tokens=60,
+    top_p=1.0,
+    frequency_penalty=0.5,
+    presence_penalty=0.0,
+    stop=["You:"]
+    )
+    return response.choices[0].get("text")
+
+
+# chatbot ...........................................
+
+
+messages = []
+def chatbot(request):
+    times = datetime.datetime.now()
+    current_time = times.strftime("%H:%M %p")
+    usr_input = request.GET.get('usr_input')
+    print(usr_input)
+    messages.append(usr_input)
+    replay=""
+    try:
+        replay = gpt(usr_input)
+        messages.append(replay)
+    except:
+        replay=None
+    print(replay)
+    if(replay == None):
+        if usr_input != None :
+            replay = gpt(usr_input)
+        elif(usr_input == None) :
+            replay = ""
+        messages.append(replay)
+    makefullcode = ""
+    for i,x in enumerate(messages):
+        if(i != 0 and i != 1):
+            if(i%2 == 0):
+                user = f"""<div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+                                <div class="chat-message">
+                                    <div class="flex items-end">
+                                        <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                                            <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">{x}</span></div>
+                                        </div>
+                                        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-1">
+                                    </div>
+                            </div>
+                
+                """
+                makefullcode = makefullcode + user 
+            else:
+                system_ = f"""<div class="chat-message">
+                                    <div class="flex items-end justify-end">
+                                        <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+                                            <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">{x}</span></div>
+                                        </div>
+                                        <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-6 h-6 rounded-full order-2">
+                                    </div>
+                                </div>                
+                """
+                makefullcode = makefullcode + system_ 
+    frontend = {"codes":makefullcode}
+
+    return render(request,'chatbot/chatbot.html',frontend)
+    
+
+
+# ....... room chating
+
+
+def chat_home(request):
+    return render(request, 'chat_room/home.html')
+
+def room(request, room):
+    username = request.GET.get('username') # henry
+    room_details = Room.objects.get(name=room)
+    return render(request, 'chat_room/room.html', {
+
+        'username': username,
+        'room': room,
+        'room_details': room_details,
+    })
+
+
+def checkview(request):
+    room = request.POST['room_name']
+    username = request.POST['username']
+
+    if Room.objects.filter(name=room).exists():
+        return redirect('/'+room+'/?username='+username)
+    else:
+        new_room = Room.objects.create(name=room)
+        new_room.save()
+        return redirect('/'+room+'/?username='+username)
+
+def send(request):
+    message = request.POST['message']
+    username = request.POST['username']
+    room_id = request.POST['room_id']
+
+    new_message = Message.objects.create(value=message, user=username, room=room_id)
+    new_message.save()
+
+def getMessages(request,  room):
+    room_details = Room.objects.get(name=room)
+    messages = Message.objects.filter(room=room_details.id)
+    return JsonResponse({"messages": list(messages.values())})
+
+
+
