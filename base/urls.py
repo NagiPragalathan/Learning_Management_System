@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from LMS import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home),
@@ -20,6 +23,12 @@ urlpatterns = [
     path('add_Faculty',views.add_faculty),
     path('add_usr',views.add_usr),
 
+    path('personal_detials',views.Personal_detials),
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+        
