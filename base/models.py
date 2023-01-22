@@ -70,3 +70,17 @@ class Details(models.Model):
     topic = models.CharField(max_length = 200)
     coming_from = models.CharField(max_length = 200)
     mail_id = models.CharField(max_length = 200)
+
+
+
+
+# chat_room
+class Room(models.Model):
+    name = models.CharField(max_length=1000)
+
+class Message(models.Model):
+    value = models.CharField(max_length=10000000)
+    date = models.DateTimeField(default=timezone.now(), blank=True)
+    room = models.CharField(max_length=1000000)
+    user = models.CharField(max_length=1000000)
+
