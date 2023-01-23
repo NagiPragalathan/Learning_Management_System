@@ -84,9 +84,13 @@ class Message(models.Model):
     room = models.CharField(max_length=1000000)
     user = models.CharField(max_length=1000000)
 
+class class_enrolled(models.Model):
+    mail_id = models.CharField(max_length = 200)
+    class_id = models.IntegerField()
 
 class ClassRooms(models.Model):
-    class_image = models.ImageField(upload_to='classroom_photo/%Y/%m/%d',default='images/Screenshot_3.png')
+    id          = models.IntegerField(primary_key=True)
+    class_image = models.CharField(max_length = 200)
     class_name  = models.CharField(max_length = 200)
     subject_code  = models.CharField(max_length = 200,unique=True)
     semester = models.IntegerField()
