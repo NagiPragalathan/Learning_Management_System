@@ -450,9 +450,66 @@
       </div>
     </div>
     
+    {% csrf_token %}
+                  <form action="add_usr" method="post">
+                  {% csrf_token %}
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Add New Class</h5>
+                            <h6 class="information mt-4">Please provide following information about New Class</h6>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <!-- <label for="name">Name</label> --> <input class="form-control" name="class_name" type="text" placeholder="Class Name"> </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group"> <input class="form-control" type="text" name="subject_code" placeholder="subject code"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group"> <input class="form-control" type="text" name="department" placeholder="department"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <class class="row">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label for="cars">Choose a semester:</label>
+                                      <div class="input-group"> <select class="form-control" id="cars" name="semester">
+                                        <option value="1">sem 1</option>
+                                        <option value="2">sem 2</option>
+                                        <option value="3">sem 3</option>
+                                        <option value="4">sem 4</option>
+                                        <option value="5">sem 5</option>
+                                        <option value="6">sem 6</option>
+                                        <option value="7">sem 7</option>
+                                        <option value="8">sem 8</option>
+
+                                    </select> </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group"> <input class="form-control" type="text" name="discription" placeholder="discription"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </class>
+                          
+                      </div>
+                        <div class=" d-flex flex-column text-center px-5 mt-3 mb-3">
+                        <input type="submit" value="Confirm" class="btn btn-primary btn-block confirm-button">
+                    </div>
+                  </form>
+                </div>
 
 
-    
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>

@@ -84,3 +84,12 @@ class Message(models.Model):
     room = models.CharField(max_length=1000000)
     user = models.CharField(max_length=1000000)
 
+
+class ClassRooms(models.Model):
+    class_image = models.CharField(max_length = 200)
+    class_name  = models.CharField(max_length = 200)
+    subject_code  = models.CharField(max_length = 200,unique=True)
+    semester = models.IntegerField()
+    department = models.CharField(max_length = 200)
+    discription = models.CharField(max_length = 200,default='No Discription yet.')
+
