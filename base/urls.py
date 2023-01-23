@@ -38,8 +38,9 @@ urlpatterns = [
     path('getMessages/<str:room>/', views.getMessages, name="getMessages"),
 
     path('class_room',views.home_classroom),
-    path('add_class',views.add_class),
+    path('add_class/',views.add_class),
     path("save_added_class",views.save_add_class),
+    path("list_class", views.list_classroom)
 
 ]
 
