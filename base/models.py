@@ -86,7 +86,7 @@ class Message(models.Model):
 
 
 class ClassRooms(models.Model):
-    class_image = models.CharField(max_length = 200)
+    class_image = models.ImageField(upload_to='classroom_photo/%Y/%m/%d',default='images/Screenshot_3.png')
     class_name  = models.CharField(max_length = 200)
     subject_code  = models.CharField(max_length = 200,unique=True)
     semester = models.IntegerField()
