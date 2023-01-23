@@ -87,6 +87,8 @@ class Message(models.Model):
 class class_enrolled(models.Model):
     mail_id = models.CharField(max_length = 200)
     class_id = models.IntegerField()
+    subject_code  = models.CharField(max_length = 200)
+
 
 class ClassRooms(models.Model):
     id          = models.IntegerField(primary_key=True)

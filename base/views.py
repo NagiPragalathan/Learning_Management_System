@@ -308,6 +308,11 @@ def get_user_name(request):
     usr_obj = User.objects.get(id=usr_id)
     faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
     return faculty_details.user_name
+def get_user_obj(request):
+    usr_id = request.user.id
+    usr_obj = User.objects.get(id=usr_id)
+    faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
+    return faculty_details
 def get_user_role(request):
     usr_id = request.user.id
     usr_obj = User.objects.get(id=usr_id)
@@ -331,15 +336,20 @@ def remove_space(string):
 
 
 def nave_home_classroom(request,pk,class_id):
+    classes=[]
+    img = {}
+    sem = [ x for x in range(0,9)]
+
     if pk == "join":
-        check = class_enrolled.objects.get(mail_id = get_user_mail(request))
-        if check.class_id != remove_space(class_id):
-            class_en = class_enrolled(mail_id = get_user_mail(request),class_id = class_id )
+            check = class_enrolled.objects.filter(subject_code = class_id)
+            id_cl = ClassRooms.objects.get(subject_code = class_id)
+            # try :
+            person_obj = Users.objects.get(mail_id=get_user_mail(request))
+            class_en = class_enrolled(mail_id = get_user_mail(request),subject_code = class_id,class_id = id_cl.id )
             class_en.save()
+            # except:
+            #     return render(request,"class_room/warning/participant_warning.html")
     else :
-        classes = []
-        img = {}
-        sem = [ x for x in range(0,9)]
         enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
         for i in enroll_classes:
             classrooms = ClassRooms.objects.get(subject_code=class_id)
@@ -352,27 +362,32 @@ def nave_home_classroom(request,pk,class_id):
                 path = "static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
                 print(path,item)
                 img[classrooms.subject_code] = path
+    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
 
-    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem})
 
 def home_classroom(request):
     classes = []
     img = {}
     sem = [ x for x in range(0,9)]
-    enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
-    for i in enroll_classes:
-        classrooms = ClassRooms.objects.get(id=i.class_id)
-        classes.append(classrooms)
-        try:
-            item = os.listdir(classrooms.class_image)
-        except:
-            item=['nofiles.jpg','']
-        if len(item)!=0:
-            path = "..\\static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
-            print(path,item)
-            img[classrooms.subject_code] = path
+    try :
+        enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
+        for i in enroll_classes:
+            classrooms = ClassRooms.objects.get(id=i.class_id)
+            classes.append(classrooms)
+            try:
+                item = os.listdir(classrooms.class_image)
+            except:
+                item=['nofiles.jpg','']
+            if len(item)!=0:
+                path = "..\\static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
+                print(path,item)
+                img[classrooms.subject_code] = path
+        return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
+        
+    except:
+        print("error at home_classroom function if you have any error in thin sfunction you can view this msg plz try to run without the try block")
 
-    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request)})
+    return render(request, 'class_room/class_room_home.html')
 
 def add_class(request):
     return render(request, 'class_room/new_add.html')
@@ -388,7 +403,7 @@ def save_add_class(request):
     class_room = ClassRooms(class_image=os.path.join(os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics'),"_".join(class_name.split(' '))+"_logos"),class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
     class_room.save()
     class_id = ClassRooms.objects.get(subject_code=subject_code)
-    enroll_class = class_enrolled(mail_id=get_user_mail(request),class_id=class_id.id)
+    enroll_class = class_enrolled(mail_id=get_user_mail(request),subject_code = subject_code,class_id=class_id.id)
     enroll_class.save()
     downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
 
