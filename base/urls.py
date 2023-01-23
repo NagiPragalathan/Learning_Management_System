@@ -40,7 +40,6 @@ urlpatterns = [
     path('class_room',views.home_classroom),
     path('<str:pk>/<str:class_id>',views.nave_home_classroom),
     path('add_class',views.add_class),
-    path('add_class/',views.add_class),
     path("save_added_class",views.save_add_class),
     path("list_class", views.list_classroom)
 
