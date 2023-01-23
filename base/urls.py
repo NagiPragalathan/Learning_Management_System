@@ -32,7 +32,7 @@ urlpatterns = [
 
 
     path('chat_home/', views.chat_home),
-    path('<str:room>/', views.room, name="chat_room"),
+    path('<str:room>/', views.chat_room, name="chat_room"),
     path('chat_home/checkview', views.checkview, name="checkview"),
     path('send', views.send, name="send"),
     path('getMessages/<str:room>/', views.getMessages, name="getMessages"),
