@@ -321,8 +321,8 @@ https://templatemo.com/tm-565-onix-digital
                 align-items: center;
                 flex-direction: row;
             "id="subscribe" action="" method="get">
-                  <input type="text" name="website" id="website" placeholder="Enter the code" required="">
-                 <button  type="submit" id="form-submit" class="main-button ">Join the meeting</button>
+                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Enter the code" required="">
+                 <button  type="submit" id="join_video"  class="main-button ">Join the meeting</button>
                 </form>
                 <br>
                 <form style="
@@ -331,7 +331,7 @@ https://templatemo.com/tm-565-onix-digital
                 align-items: center;
                 flex-direction: row;
             "id="subscribe" action="" method="get">
-                  <input type="text" name="website" id="website" placeholder="Create a meeting code" required="">
+                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Create a meeting code" required="">
                  <button  type="submit" id="form-submit" class="main-button ">Generate</button>
                 </form>
               </div>
@@ -341,6 +341,7 @@ https://templatemo.com/tm-565-onix-digital
       </div>
     </div>
   </div>
+
   <div id="subscribe" class="subscribe">
     <div class="container">
       <div class="row">
@@ -355,7 +356,7 @@ https://templatemo.com/tm-565-onix-digital
                 align-items: center;
                 flex-direction: row;
             "id="subscribe" action="" method="get">
-                  <input type="text" name="website" id="website" placeholder="Enter the room code" required="">
+                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Enter the room code" required="">
                  <button  type="submit" id="form-submit" class="main-button ">Join the room</button>
                 </form>
                 <br>
@@ -365,9 +366,34 @@ https://templatemo.com/tm-565-onix-digital
                 align-items: center;
                 flex-direction: row;
             "id="subscribe" action="" method="get">
-                  <input type="text" name="website" id="website" placeholder="Create a room code" required="">
+                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Create a room code" required="">
                  <button  type="submit" id="form-submit" class="main-button ">Generate</button>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="subscribe" class="subscribe">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-content">
+            <div class="row">
+              <div class="col-lg-10 offset-lg-1">
+                <h2>Get Join your class through link </h2>
+                <div style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;
+            "id="subscribe" >
+                  <input type="text" id="join_class" placeholder="Enter the code" style="    margin-bottom: 17px;" required="">
+                  <button id="join_class_btn" onclick="join_class()" class="main-button ">Join the meeting</button>
+                </div>
               </div>
             </div>
           </div>
@@ -769,6 +795,10 @@ https://templatemo.com/tm-565-onix-digital
   <script src="{%  static 'home/assets//js/custom.js' %}"></script>
 
   <script>
+    function join_class(){
+      let inp_val = $("#join_class").val();
+      window.location.href = "join/"+inp_val;
+    }
   // Acc
     $(document).on("click", ".naccs .menu div", function() {
       var numberIndex = $(this).index();

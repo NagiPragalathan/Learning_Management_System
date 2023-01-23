@@ -303,29 +303,55 @@ def get_user_mail(request):
     usr_obj = User.objects.get(id=usr_id)
     faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
     return faculty_details.mail
-
-
-
+def get_user_name(request):
+    usr_id = request.user.id
+    usr_obj = User.objects.get(id=usr_id)
+    faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
+    return faculty_details.user_name
+def get_user_role(request):
+    usr_id = request.user.id
+    usr_obj = User.objects.get(id=usr_id)
+    faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
+    if faculty_details.role.role == 1:
+        return "Admin"
+    elif faculty_details.role.role == 2:
+        return "Hod"
+    elif faculty_details.role.role == 3:
+        return "staff"
+    elif faculty_details.role.role == 4:
+        return "Student"
+def remove_space(string):
+  out = ""
+  for i in string:
+    if i != " ":
+      out = out +  i
+  return out
 
 #        ---------------- class room home --------------------------
 
 
-def nave_home_classroom(request,class_id):
-    classes = []
-    img = {}
-    sem = [ x for x in range(0,9)]
-    enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
-    for i in enroll_classes:
-        classrooms = ClassRooms.objects.get(subject_code=class_id)
-        classes.append(classrooms)
-        try:
-            item = os.listdir(classrooms.class_image)
-        except:
-            item=['nofiles.jpg','']
-        if len(item)!=0:
-            path = "static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
-            print(path,item)
-            img[classrooms.subject_code] = path
+def nave_home_classroom(request,pk,class_id):
+    if pk == "join":
+        check = class_enrolled.objects.get(mail_id = get_user_mail(request))
+        if check.class_id != remove_space(class_id):
+            class_en = class_enrolled(mail_id = get_user_mail(request),class_id = class_id )
+            class_en.save()
+    else :
+        classes = []
+        img = {}
+        sem = [ x for x in range(0,9)]
+        enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
+        for i in enroll_classes:
+            classrooms = ClassRooms.objects.get(subject_code=class_id)
+            classes.append(classrooms)
+            try:
+                item = os.listdir(classrooms.class_image)
+            except:
+                item=['nofiles.jpg','']
+            if len(item)!=0:
+                path = "static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
+                print(path,item)
+                img[classrooms.subject_code] = path
 
     return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem})
 
@@ -346,10 +372,10 @@ def home_classroom(request):
             print(path,item)
             img[classrooms.subject_code] = path
 
-    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem})
+    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request)})
 
 def add_class(request):
-    return render(request, 'class_room/add_class.html')
+    return render(request, 'class_room/new_add.html')
 
 def save_add_class(request):
     class_name = request.POST.get('class_name')
@@ -357,7 +383,7 @@ def save_add_class(request):
     department = request.POST.get('department')
     semester = request.POST.get('semester')
     discription = request.POST.get('discription')
-
+    
     out=os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics')
     class_room = ClassRooms(class_image=os.path.join(os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics'),"_".join(class_name.split(' '))+"_logos"),class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
     class_room.save()
@@ -366,9 +392,7 @@ def save_add_class(request):
     enroll_class.save()
     downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
 
-
-
-    return render(request, 'class_room/add_class.html')
+    return render(request, 'class_room/new_add.html')
 
 
 def list_classroom(request):

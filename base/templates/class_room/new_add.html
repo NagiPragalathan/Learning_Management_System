@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href=" {% static 'admin/assets/img/apple-icon.png' %} ">
   <link rel="icon" type="image/png" href=" {% static 'admin/assets/img/favicon.png' %} ">
   <title>
-    class room-home
+    Soft UI Dashboard by Creative Tim
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -40,8 +40,8 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" {% static ' https://demos.creative-tim.com/soft-ui-admin/pages/dashboard.html ' %} " target="_blank">
-        <img src=" {% static 'admin/assets/img/logo-ct-dark.png' %} " class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
+        <img src="https://jec.ac.in/wp-content/themes/Jayacollege_2017/images/logo_fav.png" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold">Jaya Engineering College</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -125,7 +125,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Video</span>
+            <span class="nav-link-text ms-1">Classroom</span>
           </a>
         </li>
         <li class="nav-item">
@@ -146,7 +146,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">RTL</span>
+            <span class="nav-link-text ms-1">Chatroom</span>
           </a>
         </li>
         <li class="nav-item mt-3">
@@ -170,7 +170,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Profile</span>
+            <span class="nav-link-text ms-1">user.name</span>
           </a>
         </li>
         <li class="nav-item">
@@ -217,21 +217,20 @@
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer mx-3 ">
+    <div class="sidenav-footer mx-3 " style="position : relative; top : 5%">
       <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
-        <div class="full-background" style="background-image: url(' {% static admin/assets/img/curved-images/white-curved.jpg %} ')"></div>
+        <div class="full-background" style="background-image: url(' {% static 'admin/assets/img/curved-images/white-curved.jpg' %} ')"></div>
         <div class="card-body text-start p-3 w-100">
           <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
             <i class="ni ni-diamond text-dark text-gradient text-lg top-0" aria-hidden="true" id="sidenavCardIcon"></i>
           </div>
           <div class="docs-info">
             <h6 class="text-white up mb-0">Need help?</h6>
-            <p class="text-xs font-weight-bold">Please check our docs</p>
-            <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">Documentation</a>
+            <p class="text-xs font-weight-bold">Ask Chatbot</p>
+            <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">Chatbot</a>
           </div>
         </div>
       </div>
-      <a class="btn bg-gradient-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Upgrade to pro</a>
     </div>
   </aside>
   <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
@@ -241,9 +240,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="text-white opacity-5" href=" {% static 'javascript:;' %} ">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Profile</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Classroom</li>
           </ol>
-          <h6 class="text-white font-weight-bolder ms-2">Profile</h6>
+          <h6 class="text-white font-weight-bolder ms-2">User.role</h6>
         </nav>
         <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -357,7 +356,7 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid">
-      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url(' {% static admin/assets/img/curved-images/curved0.jpg %} '); background-position-y: 50%;">
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url(' {% static 'admin/assets/img/curved-images/curved0.jpg' %} '); background-position-y: 50%;">
         <span class="mask bg-gradient-primary opacity-6"></span>
       </div>
       <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
@@ -450,64 +449,66 @@
       </div>
     </div>
     
-    {% csrf_token %}
-                  <form action="save_added_class" method="post">
-                  {% csrf_token %}
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Add New Class</h5>
-                            <h6 class="information mt-4">Please provide following information about New Class</h6>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <!-- <label for="name">Name</label> --> <input class="form-control" name="class_name" type="text" placeholder="Class Name"> </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> <input class="form-control" type="text" name="subject_code" placeholder="subject code"> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> <input class="form-control" type="text" name="department" placeholder="department"> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <class class="row">
-                              <div class="col-sm-12">
-                                  <div class="form-group">
-                                      <label for="cars">Choose a semester:</label>
-                                      <div class="input-group"> <select class="form-control" id="cars" name="semester">
-                                        <option value="1">sem 1</option>
-                                        <option value="2">sem 2</option>
-                                        <option value="3">sem 3</option>
-                                        <option value="4">sem 4</option>
-                                        <option value="5">sem 5</option>
-                                        <option value="6">sem 6</option>
-                                        <option value="7">sem 7</option>
-                                        <option value="8">sem 8</option>
 
-                                    </select> </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> <input class="form-control" type="text" name="discription" placeholder="discription"> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </class>
-                          
+    <form action="save_added_class" method="post">
+        {% csrf_token %}
+          <div class="card-body">
+              <h5 class="card-title mb-3">Add New Class</h5>
+                  <h6 class="information mt-4">Please provide following information about New Class</h6>
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <!-- <label for="name">Name</label> --> <input class="form-control" name="class_name" type="text" placeholder="Class Name"> </div>
                       </div>
-                        <div class=" d-flex flex-column text-center px-5 mt-3 mb-3">
-                        <input type="submit" value="Confirm" class="btn btn-primary btn-block confirm-button">
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <div class="input-group"> <input class="form-control" type="text" name="subject_code" placeholder="subject code"> </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <div class="input-group"> <input class="form-control" type="text" name="department" placeholder="department"> </div>
+                          </div>
+                      </div>
+                  </div>
+                  <class class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="cars">Choose a semester:</label>
+                            <div class="input-group"> <select class="form-control" id="cars" name="semester">
+                              <option value="1">sem 1</option>
+                              <option value="2">sem 2</option>
+                              <option value="3">sem 3</option>
+                              <option value="4">sem 4</option>
+                              <option value="5">sem 5</option>
+                              <option value="6">sem 6</option>
+                              <option value="7">sem 7</option>
+                              <option value="8">sem 8</option>
+
+                          </select> </div>
+                        </div>
                     </div>
-                  </form>
-                </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <div class="input-group"> <input class="form-control" type="text" name="discription" placeholder="discription"> </div>
+                          </div>
+                      </div>
+                  </div>
+                  </class>
+                
+            </div>
+              <div class=" d-flex flex-column text-center px-5 mt-3 mb-3">
+              <input type="submit" value="Confirm" class="btn btn-primary btn-block confirm-button">
+          </div>
+        </form>
+      </div>
+
+
 
 
   <div class="fixed-plugin">
