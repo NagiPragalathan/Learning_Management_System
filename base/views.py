@@ -1,20 +1,19 @@
+import random, time, datetime, openai, json, os
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-import random
-import time
 from agora_token_builder import RtcTokenBuilder
-from .models import RoomMember
-import json
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .models import Faculty_details, Users
+from .models import Faculty_details, Users, Room, Message, RoomMember, ClassRooms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-import datetime
-import openai
 from django.shortcuts import render, redirect
-from .models import Room, Message
 from django.http import HttpResponse, JsonResponse
+from bing_image_downloader import downloader
+from LMS.settings import BASE_DIR
+
+
 
 
 # Create your views here.
@@ -68,6 +67,7 @@ def Personal_detials(request):
     edit = Faculty_details.objects.get(mail=usr_obj.username)
     print(edit.mail)
     edit.role=role
+    edit.name=name
     edit.id_number=id_number
     edit.designation=designation
     edit.department=department
@@ -131,7 +131,7 @@ def add_facu(request):
 def lobby(request):
     return render(request, 'base/lobby.html')
 
-def room(request):
+def video_chat_room(request):
     return render(request, 'base/room.html')
 
 
@@ -185,7 +185,7 @@ def deleteMember(request):
     return JsonResponse('Member deleted', safe=False)
 
 def gpt(queary):
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     response = openai.Completion.create(
     model="text-davinci-003",
@@ -298,4 +298,27 @@ def getMessages(request,  room):
     return JsonResponse({"messages": list(messages.values())})
 
 
+#        ---------------- class room home --------------------------
+
+
+def home_classroom(request):
+    return render(request, 'class_room/class_room_home.html')
+
+def add_class(request):
+    return render(request, 'class_room/add_class.html')
+
+def save_add_class(request):
+    class_name = request.POST.get('class_name')
+    subject_code = request.POST.get('subject_code')
+    department = request.POST.get('department')
+    semester = request.POST.get('semester')
+    discription = request.POST.get('discription')
+
+    out=os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics')
+    
+    class_room = ClassRooms(class_image=out,class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
+    class_room.save()
+    downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
+
+    return render(request, 'class_room/add_class.html')
 

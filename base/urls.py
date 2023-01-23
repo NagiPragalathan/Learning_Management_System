@@ -8,8 +8,9 @@ urlpatterns = [
     path('', views.home),
     path('home', views.home),
 
+
     path('chat_lobby', views.lobby),
-    path('room/', views.room),
+    path('room/', views.video_chat_room),
     path('get_token/', views.getToken),
 
     path('create_member/', views.createMember),
@@ -31,10 +32,14 @@ urlpatterns = [
 
 
     path('chat_home/', views.chat_home),
-    path('<str:room>/', views.room, name="room"),
+    path('<str:room>/', views.room, name="chat_room"),
     path('chat_home/checkview', views.checkview, name="checkview"),
     path('send', views.send, name="send"),
-    path('getMessages/<str:room>/', views.getMessages, name="getMessages")
+    path('getMessages/<str:room>/', views.getMessages, name="getMessages"),
+
+    path('class_room',views.home_classroom),
+    path('add_class',views.add_class),
+    path("save_added_class",views.save_add_class),
 
 ]
 
