@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from agora_token_builder import RtcTokenBuilder
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .models import Faculty_details, Users, Room, Message, RoomMember, ClassRooms
+from .models import Faculty_details, Users, Room, Message, RoomMember, ClassRooms, class_enrolled
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -297,12 +297,56 @@ def getMessages(request,  room):
     messages = Message.objects.filter(room=room_details.id)
     return JsonResponse({"messages": list(messages.values())})
 
+# -------------------- Tools ------------------
+def get_user_mail(request):
+    usr_id = request.user.id
+    usr_obj = User.objects.get(id=usr_id)
+    faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
+    return faculty_details.mail
+
+
+
 
 #        ---------------- class room home --------------------------
 
 
+def nave_home_classroom(request,class_id):
+    classes = []
+    img = {}
+    sem = [ x for x in range(0,9)]
+    enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
+    for i in enroll_classes:
+        classrooms = ClassRooms.objects.get(subject_code=class_id)
+        classes.append(classrooms)
+        try:
+            item = os.listdir(classrooms.class_image)
+        except:
+            item=['nofiles.jpg','']
+        if len(item)!=0:
+            path = "static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
+            print(path,item)
+            img[classrooms.subject_code] = path
+
+    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem})
+
 def home_classroom(request):
-    return render(request, 'class_room/class_room_home.html')
+    classes = []
+    img = {}
+    sem = [ x for x in range(0,9)]
+    enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
+    for i in enroll_classes:
+        classrooms = ClassRooms.objects.get(id=i.class_id)
+        classes.append(classrooms)
+        try:
+            item = os.listdir(classrooms.class_image)
+        except:
+            item=['nofiles.jpg','']
+        if len(item)!=0:
+            path = "..\\static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
+            print(path,item)
+            img[classrooms.subject_code] = path
+
+    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem})
 
 def add_class(request):
     return render(request, 'class_room/add_class.html')
@@ -315,10 +359,14 @@ def save_add_class(request):
     discription = request.POST.get('discription')
 
     out=os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics')
-    
-    class_room = ClassRooms(class_image=out,class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
+    class_room = ClassRooms(class_image=os.path.join(os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics'),"_".join(class_name.split(' '))+"_logos"),class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
     class_room.save()
+    class_id = ClassRooms.objects.get(subject_code=subject_code)
+    enroll_class = class_enrolled(mail_id=get_user_mail(request),class_id=class_id.id)
+    enroll_class.save()
     downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
+
+
 
     return render(request, 'class_room/add_class.html')
 
