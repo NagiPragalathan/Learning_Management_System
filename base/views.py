@@ -262,7 +262,7 @@ def chatbot(request):
 def chat_home(request):
     return render(request, 'chat_room/home.html')
 
-def room(request, room):
+def chat_room(request, room):
     username = request.GET.get('username') # henry
     room_details = Room.objects.get(name=room)
     return render(request, 'chat_room/room.html', {
