@@ -370,3 +370,6 @@ def save_add_class(request):
 
     return render(request, 'class_room/add_class.html')
 
+
+def list_classroom(request):
+    return render(request, 'class_room/classroom.html')
