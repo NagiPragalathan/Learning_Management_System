@@ -170,7 +170,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">user.name</span>
+            <span class="nav-link-text ms-1">{{ user_name }}</span>
           </a>
         </li>
         <li class="nav-item">
@@ -491,20 +491,18 @@
             </div>
             <div class="card-body p-3">
               <p class="text-sm">
-                <b>Bio</b> : {{ detail.bio }}
+                <b>Discription</b> : {{ detail.discription }}
               </p>
               <hr class="horizontal gray-light my-4">
               <ul class="list-group">
-                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ detail.name }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">date_of_join:</strong> &nbsp; {{ detail.date_of_join }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ detail.role.mail_id }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">ID Card number :</strong> &nbsp; {{ detail.id_number }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Designation :</strong> &nbsp; {{ detail.designation }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Qualififcation :</strong> &nbsp; {{ detail.qualififcation }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Assessment Period :</strong> &nbsp; {{ detail.assessment_period }}</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Experience :</strong> &nbsp; {{ detail.experience }}</li>
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ClassRoom Name:</strong> &nbsp; {{ detail.class_name }}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">subject_code:</strong> &nbsp; {{ detail.subject_code }}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">semester :</strong> &nbsp; {{ detail.semester }}</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department :</strong> &nbsp; {{ detail.department }}</li>
-
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">owner:</strong> &nbsp; {{ detail.owner.user_name }}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Owner mail :</strong> &nbsp; {{ detail.owner.mail }}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">No.of Peoples :</strong> &nbsp; {{ people|length }}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Group created on  :</strong> &nbsp; {{ detail.date }}</li>
 
                 <li class="list-group-item border-0 ps-0 pb-0">
                   <strong class="text-dark text-sm">Social:</strong> &nbsp;
@@ -529,23 +527,17 @@
             </div> 
             <div class="card-body p-3">
               <ul class="list-group">
-                {% for i in subs %}
-                {% if i.subject_code in choosed %}
+                {% for i in people %}
                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
                   <div class="avatar me-3">
-                    {% for key, value in img.items %}
-                          {% if key == i.subject_code %}
                             <img src=" {{ value }} " alt="{{ i.subject_name }}" style="height: 50px;" class="border-radius-lg shadow">
-                          {% endif %}
-                    {% endfor  %}
                   </div>
                   <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{ i.subject_code }}</h6>
-                    <p class="mb-0 text-xs">{{ i.subject_name }}</p>
+                    <h6 class="mb-0 text-sm">{{ i.user_name }}</h6>
+                    <p class="mb-0 text-xs">{{ i.mail_id }}</p>
                   </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" onclick="rm_sub('{{ i.subject_code }}')">Remove</a>
+                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" onclick="rm_sub('{{ i.subject_code }}')">message</a>
                 </li>
-                {% endif %}
                 {% endfor %}
               </ul>
             </div>
@@ -619,68 +611,138 @@
   </div>
 
   <div class="col-12 col-xl-4" style = "width : 92.8%">
-    <div class="card h-100">
-      <div class="card-header pb-0 p-3">
-        <div class="row">
-          <div class="col-md-8 d-flex align-items-center">
-            <h6 class="mb-0">Chat Section</h6>
-          </div>
-          <div class="col-md-4 text-end">
-            <a href=" {% static 'javascript:;' %} ">
-              <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
-            </a>
-          </div>
+    <body>
+
+      <h2 style="padding-top: 20px; padding-bottom: 10px;">{{ detail.subject_code }} - {{ detail.class_name }}</h2>
+      
+      <div id="display">
+      
+       <div class="container darker">
+      <!--  <b>Destiny</b><p>Hello Everyone, How Are You Guys Doing?</p>-->
+      <!--  <span class="time-left">20th, April 2021</span>-->
+      </div>
+      
+      </div>
+      
+      <script>
+      $(document).ready(function(){
+      
+      setInterval(function(){
+          $.ajax({
+              type: 'GET',
+              url : "/getMessages/{{ detail.subject_code }}/",
+              success: function(response){
+                  console.log(response);
+                  $("#display").empty();
+                  for (var key in response.messages)
+                  {
+                      var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                      $("#display").append(temp);
+                  }
+              },
+              error: function(response){
+                  // alert('An error occurred')
+              }
+          });
+      },1000);
+      })
+      </script>
+      
+      
+      <div class="container">
+          <style>
+          .btn{
+            border: 2px rgb(0, 140, 255) solid;
+            color: white;
+            border-radius: 35px;
+          }
+          .btn:hover{
+            background-color:  rgb(0, 140, 255);
+            color: white;
+            border-radius: 2px;
+          }
+          input[type=text], select {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          }
+      
+          input[type=submit] {
+          width: 100%;
+          background-color: #0066ff;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          }
+      
+          input[type=submit]:hover {
+          background-color: #4c00ff;
+          }
+          #input1{
+            border-radius: 35px;
+            height: 10px;
+          }
+          h5{
+            text-align: center;
+            font-size: 12px;
+            font-family: 'Poppins', sans-serif;
+          }
+          h6{
+            text-align: center;
+            font-size: 10px;
+            font-family: 'Poppins', sans-serif;
+      
+      
+          }
+      
+          </style>
+          <br>
+          <div id="form-div">
+            <form id="post-form">
+                {% csrf_token %}
+                <input type="hidden" name="username" id="username" value="{{ detail.class_name }}"/>
+                <input type="hidden" name="room_id" id="room_id" value="{{ detail.subject_code }}"/>
+                <textarea class="form-control" aria-label="With textarea" type="text" name="message" id="message" style="margin-top: 10px;"></textarea>
+                <input type="submit" value="Send">
+            </form>
         </div>
       </div>
-      <div class="card-body p-3">
-        <ul class="list-group chatbox">
-            
-            <p>User.message</p>
-            <p style = "position : relative;left: 90%">Your.message</p>
-
-        </ul>
-
-        <span class="input-group-text text-body" style = "border: none">
-            <input type = "text" class="form-control px-0 box" onkeydown = "fun()"><i class="ni ni-send" id = "send"></i>
-        </span>
-        
-        <script>
-            
-            var btn = document.querySelector("#send");
-
-            btn.addEventListener("click", function (){
-            
-                var message = document.querySelector(".box");
-                var target = document.querySelector(".chatbox");
-
-                var node = document.createElement("p");
-    
-                node.style.position = "relative";
-                node.style.left = "90%";
-            
-                
-                if(node.innerHTML == null || node.innerHTML == new RegExp('/^\s+$/')) {
-                    alert("Message is Empty or only has spaces")
-                }
-                else{
-                    
-                    node.innerHTML = message.value;
-                    target.appendChild(node);
-                
-                }
-            });
-
-
-            function fun() {
-                if(event.key === "Enter"){
-                    btn.click();
-                }
-            };
-
-        </script>
-
-    </div>
-    </div>
+      <h5 >&copy;	Copyright Reserved Desphixs - 2021</h5>
+      <h6>Made by Destiny Franks &hearts;	</h6>
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+      
+      </body>
+      
+      <script type="text/javascript">
+          $(document).on('submit','#post-form',function(e){
+          e.preventDefault();
+      
+          $.ajax({
+            type:'POST',
+            url:'/send',
+            data:{
+                username:$('#username').val(),
+                room_id:$('#room_id').val(),
+                message:$('#message').val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+               // alert(data)
+            }
+          });
+          document.getElementById('message').value = ''
+        });
+      </script>
   </div>
 
 
@@ -749,6 +811,7 @@
         </div>
       </div>
     </div>
+    
   </div>
   <!--   Core JS Files   -->
   <script src=" {% static 'admin/assets/js/core/popper.min.js' %} "></script>

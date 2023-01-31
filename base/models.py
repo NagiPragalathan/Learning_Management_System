@@ -92,6 +92,8 @@ class class_enrolled(models.Model):
 
 class ClassRooms(models.Model):
     id          = models.IntegerField(primary_key=True)
+    date = models.DateTimeField(default=timezone.now(), blank=True)
+    owner = models.ForeignKey(Faculty_details, on_delete=models.CASCADE)
     class_image = models.CharField(max_length = 200)
     class_name  = models.CharField(max_length = 200)
     subject_code  = models.CharField(max_length = 200,unique=True)
