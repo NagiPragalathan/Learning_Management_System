@@ -624,30 +624,6 @@
       
       </div>
       
-      <script>
-      $(document).ready(function(){
-      
-      setInterval(function(){
-          $.ajax({
-              type: 'GET',
-              url : "/getMessages/{{ detail.subject_code }}/",
-              success: function(response){
-                  console.log(response);
-                  $("#display").empty();
-                  for (var key in response.messages)
-                  {
-                      var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
-                      $("#display").append(temp);
-                  }
-              },
-              error: function(response){
-                  // alert('An error occurred')
-              }
-          });
-      },1000);
-      })
-      </script>
-      
       
       <div class="container">
           <style>
@@ -705,7 +681,7 @@
           </style>
           <br>
           <div id="form-div">
-            <form id="post-form">
+            <form id="post-form" method="post" action="send">
                 {% csrf_token %}
                 <input type="hidden" name="username" id="username" value="{{ detail.class_name }}"/>
                 <input type="hidden" name="room_id" id="room_id" value="{{ detail.subject_code }}"/>
@@ -723,26 +699,7 @@
       
       </body>
       
-      <script type="text/javascript">
-          $(document).on('submit','#post-form',function(e){
-          e.preventDefault();
       
-          $.ajax({
-            type:'POST',
-            url:'/send',
-            data:{
-                username:$('#username').val(),
-                room_id:$('#room_id').val(),
-                message:$('#message').val(),
-              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-            },
-            success: function(data){
-               // alert(data)
-            }
-          });
-          document.getElementById('message').value = ''
-        });
-      </script>
   </div>
 
 
@@ -846,9 +803,54 @@
                 }
             });
     }
+
+
+    $(document).on('submit','#post-form',function(e){
+          e.preventDefault();
+      
+          $.ajax({
+            type:'POST',
+            url:'/send',
+            data:{
+                username:$('#username').val(),
+                room_id:$('#room_id').val(),
+                message:$('#message').val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+               // alert(data)
+            }
+          });
+          document.getElementById('message').value = ''
+        });
+
+    $(document).ready(function(){
+      setInterval(function(){
+          console.log("{{ detail.subject_code }}");
+          $.ajax({
+              type: 'GET',
+              url : "message/{{ detail.subject_code }}/",
+              success: function(response){
+                  console.log(response);
+                  $("#display").empty();
+                  for (var key in response.messages)
+                  {
+                      var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                      $("#display").append(temp);
+                  }
+              },
+              error: function(response){
+                  alert('An error occurred')
+              }
+          });
+      },1000);
+      })
   </script>
   <!-- jquary -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src=
+  "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+      </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
