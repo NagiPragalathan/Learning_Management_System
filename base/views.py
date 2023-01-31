@@ -272,6 +272,13 @@ def chat_room(request, room):
         'room_details': room_details,
     })
 
+def class_chat(request,room,username):
+    if Room.objects.filter(name=room).exists():
+        return redirect('/'+room+'/?username='+username)
+    else:
+        new_room = Room.objects.create(name=room)
+        new_room.save()
+        return redirect('/'+room+'/?username='+username)
 
 def checkview(request):
     room = request.POST['room_name']
@@ -341,39 +348,52 @@ def nave_home_classroom(request,pk,class_id):
     sem = [ x for x in range(0,9)]
 
     if pk == "join":
-            check = class_enrolled.objects.filter(subject_code = class_id)
-            id_cl = ClassRooms.objects.get(subject_code = class_id)
-            # try :
-            person_obj = Users.objects.get(mail_id=get_user_mail(request))
-            class_en = class_enrolled(mail_id = get_user_mail(request),subject_code = class_id,class_id = id_cl.id )
-            class_en.save()
-            # except:
-            #     return render(request,"class_room/warning/participant_warning.html")
-    else :
-        enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
-        for i in enroll_classes:
-            classrooms = ClassRooms.objects.get(subject_code=class_id)
-            classes.append(classrooms)
             try:
-                item = os.listdir(classrooms.class_image)
+                check = class_enrolled.objects.filter(mail_id=get_user_mail(request),subject_code = class_id)
             except:
-                item=['nofiles.jpg','']
-            if len(item)!=0:
-                path = "static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
-                print(path,item)
-                img[classrooms.subject_code] = path
-    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
+                return render(request,"class_room/warning/already_enrolled.html",{"msg":"already_enrolled"})
+            try:
+                id_cl = ClassRooms.objects.get(subject_code = class_id)
+            except:
+                return render(request,"class_room/warning/already_enrolled.html",{"msg":"class rool is not avable"})
+            try:
+                person_obj = Users.objects.get(mail_id=get_user_mail(request))
+            except:
+                return render(request,"class_room/warning/already_enrolled.html",{"msg":"user not exteies"})
+                
+            no_usr = True
+            try:
+                for i in check:
+                    if i.mail_id == get_user_mail(request):
+                        no_usr = False
+            except:
+                no_usr = True
+            if no_usr:
+                class_en = class_enrolled(mail_id = get_user_mail(request),subject_code = class_id,class_id = id_cl.id )
+                class_en.save()
+            peoples=[]
+            people = check = class_enrolled.objects.filter(subject_code = class_id)
+            for i in people:
+                person_obj = Users.objects.get(mail_id=i.mail_id)
+                peoples.append(person_obj)
+            detials = ClassRooms.objects.get(subject_code = class_id)
+            return render(request, 'class_room/classroom.html',{'people':peoples,"detail":detials})
+    else :
+        return render(request, 'class_room/classroom.html')
 
 
 def home_classroom(request):
     classes = []
     img = {}
-    sem = [ x for x in range(0,9)]
+    dep = []
+    sem = [1,2,3,4,5,6,7,8]
     try :
         enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
         for i in enroll_classes:
             classrooms = ClassRooms.objects.get(id=i.class_id)
             classes.append(classrooms)
+            if classrooms.department not in dep:
+                dep.append(classrooms.department)
             try:
                 item = os.listdir(classrooms.class_image)
             except:
@@ -382,7 +402,8 @@ def home_classroom(request):
                 path = "..\\static\\" + classrooms.class_image.split('static\\')[1] + "\\" + item[0]
                 print(path,item)
                 img[classrooms.subject_code] = path
-        return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem':sem,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
+
+        return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem_':sem,'dep':dep,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
         
     except:
         print("error at home_classroom function if you have any error in thin sfunction you can view this msg plz try to run without the try block")
@@ -400,7 +421,7 @@ def save_add_class(request):
     discription = request.POST.get('discription')
     
     out=os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics')
-    class_room = ClassRooms(class_image=os.path.join(os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics'),"_".join(class_name.split(' '))+"_logos"),class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription)
+    class_room = ClassRooms(class_image=os.path.join(os.path.join(os.path.join(BASE_DIR, 'static'),'classroom_pics'),"_".join(class_name.split(' '))+"_logos"),class_name=class_name,subject_code=subject_code,department=department,semester=semester,discription=discription,owner=Faculty_details(mail=get_user_mail(request)))
     class_room.save()
     class_id = ClassRooms.objects.get(subject_code=subject_code)
     enroll_class = class_enrolled(mail_id=get_user_mail(request),subject_code = subject_code,class_id=class_id.id)
@@ -408,7 +429,3 @@ def save_add_class(request):
     downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
 
     return render(request, 'class_room/new_add.html')
-
-
-def list_classroom(request):
-    return render(request, 'class_room/classroom.html')
