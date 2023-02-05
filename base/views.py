@@ -264,7 +264,8 @@ def chat_home(request):
 
 def chat_room(request, room):
     username = request.GET.get('username') # henry
-    room_details = Room.objects.get(name=room)
+    room_details = Room.objects.filter(name=room)
+    print(room_details)
     return render(request, 'chat_room/room.html', {
 
         'username': username,
@@ -343,10 +344,6 @@ def remove_space(string):
 
 
 def nave_home_classroom(request,pk,class_id):
-    classes=[]
-    img = {}
-    sem = [ x for x in range(0,9)]
-
     if pk == "join":
             print(get_user_mail(request))
             if class_enrolled.objects.filter(mail_id=get_user_mail(request),subject_code = class_id).exists():
@@ -375,14 +372,20 @@ def nave_home_classroom(request,pk,class_id):
         peoples=[]
         people = class_enrolled.objects.filter(subject_code = class_id)
         test = class_enrolled.objects.all()
+        detials = ClassRooms.objects.get(subject_code = class_id)
+
         for i in test:
             print(i.class_id,i.mail_id,i.subject_code)
         for i in people:
             print(i.class_id,i.mail_id,i.subject_code)
             person_obj = Users.objects.get(mail_id=i.mail_id)
             peoples.append(person_obj)
-        detials = ClassRooms.objects.get(subject_code = class_id)
-        return render(request, 'class_room/classroom.html',{'people':peoples,"detail":detials})
+        if Room.objects.filter(name=class_id).exists():
+            return render(request, 'class_room/classroom.html',{'people':peoples,"detail":detials})
+        else:
+            new_room = Room.objects.create(name=class_id)
+            new_room.save()
+            return render(request, 'class_room/classroom.html',{'people':peoples,"detail":detials})
 
 
 def home_classroom(request):
@@ -412,8 +415,6 @@ def home_classroom(request):
     return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem_':sem,'dep':dep,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
         
 
-    return render(request, 'class_room/class_room_home.html')
-
 def add_class(request):
     return render(request, 'class_room/new_add.html')
 
@@ -433,3 +434,4 @@ def save_add_class(request):
     downloader.download(str("_".join(class_name.split(' ')))+"_logos", limit=2, output_dir=out, adult_filter_off=True, force_replace=False, timeout=60, verbose=True)
 
     return render(request, 'class_room/new_add.html')
+
