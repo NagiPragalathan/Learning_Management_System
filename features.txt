@@ -1,0 +1,13 @@
+meet
+class room
+group chat
+notes = { link notes, website, pdf }
+blog
+attendes
+mark update
+mcq
+Tools 
+Events = { update }
+chatbot
+dynamic forms
+

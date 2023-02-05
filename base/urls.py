@@ -38,7 +38,6 @@ urlpatterns = [
     path('getMessages/<str:room>/', views.getMessages, name="getMessages"),
 
     path('class_room',views.home_classroom),
-    path('class_room/send', views.csend),
     path('message/<str:room>/',views.chatgetMessages, name="message"),
     path('<str:pk>/<str:class_id>',views.nave_home_classroom),
     path('add_class',views.add_class),
