@@ -22,7 +22,7 @@ urlpatterns = [
     path('get_member/', getMember),
     path('delete_member/', deleteMember),
 
-    path('login',login_page),
+    path('login_',login_page),
     path('login_to_home',login_into_home),
 
 
