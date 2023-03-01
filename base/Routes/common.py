@@ -1,13 +1,12 @@
 import random, time, json
 
-from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from agora_token_builder import RtcTokenBuilder
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from ..models import Faculty_details, Users, Room, Message, RoomMember
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 

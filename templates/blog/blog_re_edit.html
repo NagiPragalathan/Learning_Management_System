@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Skydash Admin</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href=" {% static 'vendors/feather/feather.css' %} ">
+        <link rel="stylesheet" href=" {% static 'vendors/ti-icons/css/themify-icons.css' %} ">
+        <link rel="stylesheet" href=" {% static 'vendors/css/vendor.bundle.base.css' %} ">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <link rel="stylesheet" href=" {% static 'vendors/select2/select2.min.css' %} ">
+        <link rel="stylesheet" href=" {% static 'vendors/select2-bootstrap-theme/select2-bootstrap.min.css' %} ">
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href=" {% static 'css/vertical-layout-light/style.css' %} ">
+        <!-- endinject -->
+        <link rel="shortcut icon" href=" {% static 'images/favicon.png' %} " />
+        <link href= "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+
+    <body onload="load()">
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo mr-5" href=" {% static 'index.html' %} "><img src=" {{ logo.image.url }} " class="mr-2" alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href=" {% static 'index.html' %} "><img src=" {{ logo.image.url }} " alt="logo"/></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav navbar-nav-right">        
+                <li class="nav-item nav-settings d-none d-lg-flex">
+                    <a class="nav-link" href="#">
+                    <i class="icon-ellipsis"></i>
+                    </a>
+                </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+                </button>
+            </div>
+            </nav>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+                </div>
+            </div>
+            <div id="right-sidebar" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="todo-tab" data-toggle="tab" href=" {% static '#todo-section' %} " role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="chats-tab" data-toggle="tab" href=" {% static '#chats-section' %} " role="tab" aria-controls="chats-section">CHATS</a>
+                </li>
+                </ul>
+                <div class="tab-content" id="setting-content">
+                <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                    <div class="add-items d-flex px-3 mb-0">
+                    <form class="form w-100">
+                        <div class="form-group d-flex">
+                        <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                        <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="list-wrapper px-3">
+                    <ul class="d-flex flex-column-reverse todo-list">
+                        <li>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="checkbox" type="checkbox">
+                            Team review meeting at 3.00 PM
+                            </label>
+                        </div>
+                        <i class="remove ti-close"></i>
+                        </li>
+                        <li>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="checkbox" type="checkbox">
+                            Prepare for presentation
+                            </label>
+                        </div>
+                        <i class="remove ti-close"></i>
+                        </li>
+                        <li>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="checkbox" type="checkbox">
+                            Resolve all the low priority tickets due today
+                            </label>
+                        </div>
+                        <i class="remove ti-close"></i>
+                        </li>
+                        <li class="completed">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="checkbox" type="checkbox" checked>
+                            Schedule meeting for next week
+                            </label>
+                        </div>
+                        <i class="remove ti-close"></i>
+                        </li>
+                        <li class="completed">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="checkbox" type="checkbox" checked>
+                            Project review
+                            </label>
+                        </div>
+                        <i class="remove ti-close"></i>
+                        </li>
+                    </ul>
+                    </div>
+                    <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Events</h4>
+                    <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex mb-2">
+                        <i class="ti-control-record text-primary mr-2"></i>
+                        <span>Feb 11 2018</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+                    <p class="text-gray mb-0">The total number of sessions</p>
+                    </div>
+                    <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex mb-2">
+                        <i class="ti-control-record text-primary mr-2"></i>
+                        <span>Feb 7 2018</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+                    <p class="text-gray mb-0 ">Call Sarah Graves</p>
+                    </div>
+                </div>
+                <!-- To do section tab ends -->
+                <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+                    <div class="d-flex align-items-center justify-content-between border-bottom">
+                    <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+                    <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+                    </div>
+                    <ul class="chat-list">
+                    <li class="list active">
+                        <div class="profile"><img src=" {% static 'images/faces/face1.jpg' %} " alt="image"><span class="online"></span></div>
+                        <div class="info">
+                        <p>Thomas Douglas</p>
+                        <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">19 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src=" {% static 'images/faces/face2.jpg' %} " alt="image"><span class="offline"></span></div>
+                        <div class="info">
+                        <div class="wrapper d-flex">
+                            <p>Catherine</p>
+                        </div>
+                        <p>Away</p>
+                        </div>
+                        <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                        <small class="text-muted my-auto">23 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src=" {% static 'images/faces/face3.jpg' %} " alt="image"><span class="online"></span></div>
+                        <div class="info">
+                        <p>Daniel Russell</p>
+                        <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">14 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src=" {% static 'images/faces/face4.jpg' %} " alt="image"><span class="offline"></span></div>
+                        <div class="info">
+                        <p>James Richardson</p>
+                        <p>Away</p>
+                        </div>
+                        <small class="text-muted my-auto">2 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src=" {% static 'images/faces/face5.jpg' %} " alt="image"><span class="online"></span></div>
+                        <div class="info">
+                        <p>Madeline Kennedy</p>
+                        <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">5 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src=" {% static 'images/faces/face6.jpg' %} " alt="image"><span class="online"></span></div>
+                        <div class="info">
+                        <p>Sarah Graves</p>
+                        <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">47 min</small>
+                    </li>
+                    </ul>
+                </div>
+                <!-- chat tab ends -->
+                </div>
+            </div>
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href=" {% static 'index.html' %} ">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <iconify-icon icon="mdi:about" width="20" height="20"></iconify-icon>
+                    <span class="menu-title">About Us</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/ui-features/buttons.html' %} ">Buttons</a></li>
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/ui-features/dropdowns.html' %} ">Dropdowns</a></li>
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/ui-features/typography.html' %} ">Typography</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                    <iconify-icon icon="bx:book-reader" width="20" height="20"></iconify-icon>
+                    <span class="menu-title">Government Funding</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href=" {% static 'pages/forms/basic_elements.html' %} ">Basic Elements</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                    <iconify-icon icon="teenyicons:bulb-on-solid" width="20" height="20"></iconify-icon>
+                    <span class="menu-title">MBA-IEV</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="charts">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/charts/chartjs.html' %} ">ChartJs</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                    <iconify-icon icon="material-symbols:vpn-key-outline-rounded" width="20" height="20"></iconify-icon>
+                    <span class="menu-title"> Our Startups</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="tables">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/tables/basic-table.html' %} ">Basic table</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                    <iconify-icon icon="arcticons:netbenefits" width="20" height="20"></iconify-icon>
+                    <span class="menu-title">Benefits</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="icons">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/icons/mdi.html' %} ">Mdi icons</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                    <i class="icon-head menu-icon"></i>
+                    <span class="menu-title">Contacts</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="auth">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/samples/login.html' %} "> Login </a></li>
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/samples/register.html' %} "> Register </a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+                    <iconify-icon icon="material-symbols:settings-suggest-rounded" width="20" height="20"></iconify-icon>
+                    <span class="menu-title">Other Seetings</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="error">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/samples/error-404.html' %} "> 404 </a></li>
+                        <li class="nav-item"> <a class="nav-link" href=" {% static 'pages/samples/error-500.html' %} "> 500 </a></li>
+                    </ul>
+                    </div>
+                </li>
+                </ul>
+            </nav>
+
+
+
+
+            <!-- partial -->
+            <div class="main-panel">        
+                <div class="content-wrapper">
+                    <!-- component -->
+                    <div>
+                        <h1 style="font-weight: bold;font-size: 28px;">Write Your Blog Here</h1>
+                    </div>
+                    <div class="py-12">
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                <div class="p-6 bg-white border-b border-gray-200">
+                                    <form method="POST">
+                                            {% csrf_token %}
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Title <span class="text-red-500">*</span></label></br>
+                                            <input type="text" value="{{ obj.title }}" class="border-2 border-gray-300 p-2 w-full" name="title" id="title" value="" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Description</label></br>
+                                            <input type="text" value="{{ obj.description }}" class="border-2 border-gray-300 p-2 w-full" name="description" id="description" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Thumbnail image</label></br>
+                                            <input type="text" value="{{ obj.blog_profile_img }}" class="border-2 border-gray-300 p-2 w-full" name="Thumbnail" id="Thumbnail" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Category</label></br>
+                                            <input type="text" value="{{ obj.categories }}" class="border-2 border-gray-300 p-2 w-full" name="Category" id="Category" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-8">
+                                            <label class="text-xl text-gray-600">Content <span class="text-red-500">*</span></label></br>
+                                            <textarea name="editor2" id="editor2" class="border-2 border-gray-500">
+                                                
+                                            </textarea>
+                                        </div>
+
+                                        <div class="flex p-1">
+                                            <select class="border-2 border-gray-300 border-r p-2" name="action">
+                                                <option>Save and Publish</option>
+                                                <option>Save Draft</option>
+                                            </select>
+                                            <button onclick="img_upload('save_edit_blog/{{ obj.id }}','#content',['#title','#description','#Category','#Thumbnail'],{{ obj.id }})" class="p-3 bg-blue-500 text-white hover:bg-blue-400" required>Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="content2">
+                        <div style="    padding: 23px;" class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <p>The number of <code>change</code> events: <strong><span id="changes"></span></strong>.</p>
+                            <h3>Mirrored Content</h3>
+                            <hr style="    border-top-width: 1px; margin-top: 14px;">
+                            <div id="editorcontent2" class="p-6 bg-white border-b border-gray-200">
+                            </div>
+                        </div>
+                    </div>
+            <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+        <script>
+            function load(){
+              let val = "{{ obj.content|escapejs }}";
+              CKEDITOR.instances['editor2'].setData(val);
+            }
+              var changesCount = 0;
+              var editor2 = CKEDITOR.replace('editor2', {
+                removePlugins: 'sourcearea',
+                removeButtons: 'PasteFromWord'
+        
+              });
+              editor2.on('change', function(ev) {
+                changesCount++;
+                document.getElementById('content2').style.display = '';
+                document.getElementById('changes').innerHTML = changesCount.toString();
+                document.getElementById('editorcontent2').innerHTML = editor2.getData();
+              });
+            function img_upload(url,con,datas,num) {
+                
+                console.log(datas,url)
+                var data = new FormData();
+                data.append(con,editor2.getData())
+                data.append("csrfmiddlewaretoken", $("input[name=csrfmiddlewaretoken]").val());
+                data.append("id","num")
+
+                console.log(num)
+                for(let i=0;i<datas.length;i++){
+                  data.append(datas[i],$(datas[i]).val())
+                }
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    processData: false,
+                    contentType: false,
+                    mimeType: "multipart/form-data",
+                    data: data,
+                    success: function(data) {
+                        if (data.status == "Upload Done") {
+                            console.log("Uploading Done successfully")
+                        }
+                        else{
+                            console.log('error')
+                        }
+                    }
+                })
+              }
+          </script>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src=" {% static 'vendors/js/vendor.bundle.base.js' %} "></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <script src=" {% static 'vendors/typeahead.js/typeahead.bundle.min.js' %} "></script>
+        <script src=" {% static 'vendors/select2/select2.min.js' %} "></script>
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src=" {% static 'js/off-canvas.js' %} "></script>
+        <script src=" {% static 'js/hoverable-collapse.js' %} "></script>
+        <script src=" {% static 'js/template.js' %} "></script>
+        <script src=" {% static 'js/settings.js' %} "></script>
+        <script src=" {% static 'js/todolist.js' %} "></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src=" {% static 'js/file-upload.js' %} "></script>
+        <script src=" {% static 'js/typeahead.js' %} "></script>
+        <script src=" {% static 'js/select2.js' %} "></script>
+        <!-- End custom js for this page-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.3/iconify-icon.min.js"></script>
+    </body>
+
+</html>
+
+

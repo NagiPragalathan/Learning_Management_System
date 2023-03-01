@@ -8,6 +8,7 @@ from .Routes.staff import *
 from .Routes.students import *
 from .Routes.study import *
 from .Routes.exam import *
+from .Routes.blog import *
 from .Routes.admin_page import *
 
 
@@ -136,7 +137,20 @@ exam = [
 ]
 
 
-urlpatterns.extend(Make_Join([common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
+blog_url = [
+    path('list_blog',list_blog),
+    path('list_edit_blog',list_edit_blog),
+    path('view_blog/<str:pk>',view_blog),
+    path('edit_blog/<str:pk>',edit_blog),
+    path('create_blog',blog_edit),
+    path('save_blog',save_blog),
+    path('delete_blog',delete_blog),
+    path('edit_blog/save_edit_blog/<int:pk>',save_edit_blog),
+
+]
+
+
+urlpatterns.extend(Make_Join([blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

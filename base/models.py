@@ -82,7 +82,7 @@ class Room(models.Model):
 
 class Message(models.Model):
     value = models.CharField(max_length=10000000)
-    date = models.DateTimeField(default=timezone.now(), blank=True)
+    date = models.DateTimeField(default=timezone.now, blank=True)
     room = models.CharField(max_length=1000000)
     user = models.CharField(max_length=1000000)
 
@@ -158,3 +158,12 @@ class Result(models.Model):
     marks = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now=True)
 
+# Blog..................................
+class blog(models.Model):
+    id              = models.IntegerField(primary_key=True)
+    title           = models.CharField(max_length = 200,default='UnTitled')
+    description     = models.CharField(max_length = 200,default = "Author not provied any description")
+    content         = models.CharField(max_length = 2000,default = "Author not provied any description")
+    blog_profile_img = models.CharField(max_length = 2000,default = "https://www.equalityhumanrights.com/sites/default/files/styles/listing_image/public/default_images/blog-teaser-default-full_5.jpg?itok=YOsTg-7X")
+    categories = models.CharField(max_length = 200)
+    updated_date    = models.DateField(default=timezone.now())

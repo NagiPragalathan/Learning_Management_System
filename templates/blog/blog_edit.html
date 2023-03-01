@@ -1,0 +1,120 @@
+{% extends 'student/studentbase.html' %}
+
+{% block content %}
+<link href= "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+            <!-- partial -->
+            <div class="main-panel">        
+                <div class="content-wrapper">
+                    <!-- component -->
+                    <div style="    font-weight: bold;display: flex;font-size: 28px;align-content: center;justify-content: center;align-items: center;flex-direction: row;flex-wrap: wrap;">
+                      <h1 style="font-weight: bold;font-size: 28px;">Write Your Blog Here</h1>
+                    </div>
+                        <d class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                <div class="p-6 bg-white border-b border-gray-200">
+                                    <form method="POST">
+                                            {% csrf_token %}
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Title <span class="text-red-500">*</span></label></br>
+                                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="title" id="title" value="" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Description</label></br>
+                                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="description" id="description" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Thumbnail image</label></br>
+                                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="Thumbnail" id="Thumbnail" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="text-xl text-gray-600">Category</label></br>
+                                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="Category" id="Category" placeholder="(Optional)">
+                                        </div>
+
+                                        <div class="mb-8">
+                                            <label class="text-xl text-gray-600">Content <span class="text-red-500">*</span></label></br>
+                                            <textarea name="editor2" id="editor2" class="border-2 border-gray-500">
+                                                
+                                            </textarea>
+                                        </div>
+
+                                        <div class="flex p-1">
+                                            <select class="border-2 border-gray-300 border-r p-2" name="action">
+                                                <option>Save and Publish</option>
+                                                <option>Save Draft</option>
+                                            </select>
+                                            <button onclick="img_upload('save_blog','#content',['#title','#description','#Category','#Thumbnail'])" class="p-3 bg-blue-500 text-white hover:bg-blue-400" required>Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+          
+                    </div>
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="content2">
+                        <div style="    padding: 23px;" class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <p>The number of <code>change</code> events: <strong><span id="changes"></span></strong>.</p>
+                            <h3>Mirrored Content</h3>
+                            <hr style="    border-top-width: 1px; margin-top: 14px;">
+                            <div id="editorcontent2" class="p-6 bg-white border-b border-gray-200">
+                            </div>
+                        </div>
+                    </div>
+            <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        {% endblock content %}
+
+        {% block script %}
+
+        <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+        <script>
+
+              var changesCount = 0;
+              var editor2 = CKEDITOR.replace('editor2', {
+                removePlugins: 'sourcearea',
+                removeButtons: 'PasteFromWord'
+        
+              });
+              editor2.on('change', function(ev) {
+                changesCount++;
+                document.getElementById('content2').style.display = '';
+                document.getElementById('changes').innerHTML = changesCount.toString();
+                document.getElementById('editorcontent2').innerHTML = editor2.getData();
+              });
+            
+            function img_upload(url,con,datas) {
+                
+                console.log(datas,url)
+                var data = new FormData();
+                data.append(con,editor2.getData())
+                data.append("csrfmiddlewaretoken", $("input[name=csrfmiddlewaretoken]").val());
+                for(let i=0;i<datas.length;i++){
+                  data.append(datas[i],$(datas[i]).val())
+                }
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    processData: false,
+                    contentType: false,
+                    mimeType: "multipart/form-data",
+                    data: data,
+                    success: function(data) {
+                        if (data.status == "Upload Done") {
+                            console.log("Uploading Done successfully")
+                        }
+                        else{
+                            console.log('error')
+                        }
+                    }
+                })
+              }
+          </script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.3/iconify-icon.min.js"></script>
+      {% endblock script %}
