@@ -167,3 +167,12 @@ class blog(models.Model):
     blog_profile_img = models.CharField(max_length = 2000,default = "https://www.equalityhumanrights.com/sites/default/files/styles/listing_image/public/default_images/blog-teaser-default-full_5.jpg?itok=YOsTg-7X")
     categories = models.CharField(max_length = 200)
     updated_date    = models.DateField(default=timezone.now())
+
+
+# Gallery.............................
+
+class Gallery(models.Model):
+    G_id = models.IntegerField(primary_key=True)
+    image = models.ImageField(upload_to='Gallery/%Y/%m/%d',default='images/user_image.png')
+    categories = models.CharField(max_length = 200)
+    date = models.DateField(default=timezone.now())

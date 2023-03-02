@@ -4,11 +4,12 @@ from django.http import JsonResponse
 from agora_token_builder import RtcTokenBuilder
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from ..models import Faculty_details, Users, Room, Message, RoomMember
+from ..models import Faculty_details, Users, Room, Message, RoomMember, Gallery
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from .Tool.blogTool import get_images
 
 
 def login_page(request):
@@ -148,3 +149,27 @@ def chatgetMessages(request,  room):
     room_details = Room.objects.get(name=room)
     messages = Message.objects.filter(room=room_details.id)
     return JsonResponse({"messages": list(messages.values())})
+
+
+#...............gallery.......................................
+def gallery(request):
+    item = get_images()
+    return render(request,"Gallery/gallery.html",{"categories":item[0],"images":item[1]})
+#............................................................
+# upload image...............................................
+def upload_image(request):
+    categories = request.POST.get("Category")
+    image = request.FILES["image_file"]
+    update = Gallery(image=image,categories=categories)
+    update.save()
+    return render(request,"about_us/team.html")
+
+def delete_image(request):
+    id = request.POST.get("id")
+    image = Gallery.objects.get(G_id=id)
+    image.delete()
+    return render(request,"about_us/team.html")
+#..............................................................
+def image_upload_page_gallery(request):
+    item = get_images()
+    return render(request,"Gallery/empty.html",{"categories":item[0],"images":item[1]})

@@ -1,0 +1,109 @@
+{% extends 'student/studentbase.html' %}
+
+{% block content %}
+<link
+href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+rel="stylesheet"
+type="text/css"
+/>
+<div class="main-panel">        
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Upload image</h4>
+              <p class="card-description">
+                Upload the images to Gallery
+              </p>
+              <form class="forms-sample" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">categories</label>
+                  <input type="text" class="form-control" placeholder="Category" id="Category" name="Category">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">image</label>
+                  <input type="file" id="fileInput-single" class="form-control drop-zoon__file-input" accept="image/*" name="image_file" >
+                </div>
+                <button id="btn" onclick="upload()" class="btn btn-primary mr-2">Submit</button>
+                <button class="btn btn-light">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <section class="overflow-hidden text-gray-700 ">
+          <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+              {% for i in categories %}
+                  <div>
+                      <hr style="    margin-top: 20px;">
+                      <h1 style="margin-top: 23px;font-weight: bold;font-size: 26px;">{{ i.0.categories }}</h1>
+                  </div>
+                  <div class="flex flex-wrap -m-1 md:-m-2" style="    margin-top: 16px;">
+                          {% for j in i %}
+                                  <div class="flex flex-wrap w-1/3">
+                                      <div class="w-full p-1 md:p-2">
+                                          <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"src="{{ j.image.url }}">
+                                      </div>
+                                      <button onclick="del('{{ j.G_id }}')" style="display: flex; flex-wrap: nowrap; flex-direction: row; align-content: center; justify-content: center; align-items: center;"><iconify-icon icon="ic:baseline-delete-forever" style="color: red;" width="20" height="20"></iconify-icon>
+                                      <h6>Delete</h6></button>
+                                  </div>
+                          {% endfor %}
+                  </div>
+            {% endfor %}
+          </div>
+      </section>
+   
+  </div>
+  <!-- main-panel ends -->
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block script %} 
+<script>
+    function upload() {
+            var data = new FormData();
+            data.append("image_file", $("#fileInput-single")[0].files[0])
+            data.append("csrfmiddlewaretoken", $("input[name=csrfmiddlewaretoken]").val())
+            data.append("Category",$("#Category").val())
+            $.ajax({
+                method: "POST",
+                url: "upload_image",
+                processData: false,
+                contentType: false,
+                mimeType: "multipart/form-data",
+                data: data,
+                success: function(data) {
+                    if (data.status == "Upload Done") {
+                        console.log("Uploading Done successfully")
+                    }
+                    else{
+                        console.log('error')
+                    }
+                }
+            })
+        }
+        function del(id) {
+                $.ajax({
+                    method: "POST",
+                    url: 'delete_image',
+                    data: {
+                        'id': id,
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+                    }, success: function (data) {
+                        location.reload();
+                    }
+                });
+        }
+
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.3/iconify-icon.min.js"></script>
+
+
+{% endblock script %}

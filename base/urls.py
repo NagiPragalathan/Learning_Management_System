@@ -149,8 +149,16 @@ blog_url = [
 
 ]
 
+gallery_ = [
 
-urlpatterns.extend(Make_Join([blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
+    path("gallery",gallery),
+    path('image_upload_page_gallery',image_upload_page_gallery),
+    path('upload_image',upload_image),
+    path('delete_image',delete_image),
+    
+]
+
+urlpatterns.extend(Make_Join([gallery_,blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
