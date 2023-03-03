@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import Course, Ebook
+from ..models import NoteCourse, Ebook
 from .Forms.Notes_form import EbookForm, CourseForm
 
 def course_list(request):
-    courses = Course.objects.all()
+    courses = NoteCourse.objects.all()
     for i in courses:
-        print(i)
+        print(i.name)
     return render(request, 'notes/course_list.html', {'courses': courses})
 
 def course_detail(request, pk):
-    course = get_object_or_404(Course, pk=pk)
+    course = get_object_or_404(NoteCourse, pk=pk)
     return render(request, 'notes/course_detail.html', {'course': course})
 
 def course_add(request):
@@ -24,7 +24,7 @@ def course_add(request):
     return render(request, 'notes/course_add.html', context)
 
 def course_edit(request, pk):
-    course = Course.objects.get(id=pk)
+    course = NoteCourse.objects.get(id=pk)
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
@@ -35,7 +35,7 @@ def course_edit(request, pk):
     return render(request, 'notes/course_edit.html', {'form': form, 'course': course})
 
 def course_delete(request, pk):
-    course = get_object_or_404(Course, pk=pk)
+    course = get_object_or_404(NoteCourse, pk=pk)
     course.delete()
     return redirect('course_list')
 
@@ -64,3 +64,7 @@ def ebook_delete(request, pk):
     ebook = get_object_or_404(Ebook, pk=pk)
     ebook.delete()
     return redirect('course_list')
+
+def book_list(request):
+    books = Ebook.objects.all()
+    return render(request, 'notes/ebook_list.html', {'books': books})
