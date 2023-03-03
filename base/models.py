@@ -176,3 +176,23 @@ class Gallery(models.Model):
     image = models.ImageField(upload_to='Gallery/%Y/%m/%d',default='images/user_image.png')
     categories = models.CharField(max_length = 200)
     date = models.DateField(default=timezone.now())
+
+class NoteCourse(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    course_id = models.CharField(max_length=50)
+    semester = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class Ebook(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=100)
+    subject = models.CharField(max_length=50)
+    course = models.ForeignKey(NoteCourse, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='ebooks')
+
+    def __str__(self):
+        return self.title

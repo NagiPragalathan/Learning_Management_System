@@ -1,0 +1,19 @@
+{% extends 'teacher/teacherbase.html' %}
+
+
+{% block content %}
+  <h2>{{ course.name }}</h2>
+  <p><strong>Code:</strong> {{ course.code }}</p>
+  <p><strong>Description:</strong> {{ course.description }}</p>
+  <hr>
+  <h4>Subjects:</h4>
+  {% if course.subject_set.all %}
+    <ul>
+      {% for subject in course.subject_set.all %}
+        <li><a href="{% url 'subject_detail' subject.id %}">{{ subject.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No subjects found for this course.</p>
+  {% endif %}
+{% endblock %}
