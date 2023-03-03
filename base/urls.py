@@ -164,10 +164,12 @@ note = [
     path('', course_list, name='course_list'),
     path('course/course_edit/<int:pk>', course_detail, name='course_detail'),
     path('course/<int:pk>/', course_detail, name='course_detail'),
+    path('course/add/', course_add, name='course_add'),
+
+    path('ebook/book_list/', book_list, name='book_list'),
     path('ebook/add/', ebook_add, name='ebook_add'),
     path('ebook/<int:pk>/edit/', ebook_edit, name='ebook_edit'),
     path('ebook/<int:pk>/delete/', ebook_delete, name='ebook_delete'),
-    path('course/add/', course_add, name='course_add'),
 ]
 
 
