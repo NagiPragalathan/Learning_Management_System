@@ -7,6 +7,7 @@ from .Routes.common import *
 from .Routes.staff import *
 from .Routes.students import *
 from .Routes.study import *
+from .Routes.notes import *
 from .Routes.exam import *
 from .Routes.blog import *
 from .Routes.admin_page import *
@@ -158,8 +159,18 @@ gallery_ = [
     
 ]
 
-urlpatterns.extend(Make_Join([gallery_,blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
+
+note = [
+    path('', course_list, name='course_list'),
+    path('course/<int:pk>/', course_detail, name='course_detail'),
+    path('ebook/add/', ebook_add, name='ebook_add'),
+    path('ebook/<int:pk>/edit/', ebook_edit, name='ebook_edit'),
+    path('ebook/<int:pk>/delete/', ebook_delete, name='ebook_delete'),
+    path('course/add/', course_add, name='course_add'),
+]
+
+
+urlpatterns.extend(Make_Join([note,gallery_,blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
-        
