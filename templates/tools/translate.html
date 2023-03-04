@@ -1,0 +1,60 @@
+
+    <!-- <form method="post">
+        {% csrf_token %}
+        <label for="text">Text to translate:</label><br>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br><br>
+
+        <label for="src_lang">Source language:</label>
+        <select id="src_lang" name="src_lang">
+            {% for code, name in LANGUAGES.items %}
+                <option value="{{ code }}">{{ name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="dest_lang">Destination language:</label>
+        <select id="dest_lang" name="dest_lang">
+            {% for code, name in LANGUAGES.items %}
+                <option value="{{ code }}">{{ name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="Translate">
+    </form>
+
+    {% if translated_text %}
+        <hr>
+        <h2>Translated text:</h2>
+        <p>{{ translated_text }}</p>
+    {% endif %} -->
+
+
+    <h1>Google Translate</h1>
+    <h1>{{ LANGUAGES }}</h1>
+    <form method="post" action="trans">
+        {% csrf_token %}
+        <label for="text">Enter text:</label>
+        <input type="text" name="text" required>
+        <br><br>
+        <label for="source_lang">Select source language:</label>
+        <select name="source_lang" required>
+              {% for code, name in LANGUAGES.items %}
+                  <option value="{{ code }}">{{ name }}</option>
+              {% endfor %}
+        </select>
+        <br><br>
+        <label for="target_lang">Select target language:</label>
+        <select name="target_lang" required>
+              {% for code, name in LANGUAGES.items %}
+                  <option value="{{ code }}">{{ name }}</option>
+              {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Translate</button>
+    </form>
+    {% if translation %}
+        <hr>
+        <h2>Translation:</h2>
+        <p>{{ translation.text }}</p>
+    {% endif %}
+
+

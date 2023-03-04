@@ -94,7 +94,7 @@ class class_enrolled(models.Model):
 
 class ClassRooms(models.Model):
     id          = models.IntegerField(primary_key=True)
-    date = models.DateTimeField(default=timezone.now(), blank=True)
+    date = models.DateTimeField(default=timezone.now, blank=True)
     owner = models.ForeignKey(Faculty_details, on_delete=models.CASCADE)
     class_image = models.CharField(max_length = 200)
     class_name  = models.CharField(max_length = 200)
@@ -166,7 +166,7 @@ class blog(models.Model):
     content         = models.CharField(max_length = 2000,default = "Author not provied any description")
     blog_profile_img = models.CharField(max_length = 2000,default = "https://www.equalityhumanrights.com/sites/default/files/styles/listing_image/public/default_images/blog-teaser-default-full_5.jpg?itok=YOsTg-7X")
     categories = models.CharField(max_length = 200)
-    updated_date    = models.DateField(default=timezone.now())
+    updated_date    = models.DateField(default=timezone.now)
 
 
 # Gallery.............................
@@ -175,8 +175,9 @@ class Gallery(models.Model):
     G_id = models.IntegerField(primary_key=True)
     image = models.ImageField(upload_to='Gallery/%Y/%m/%d',default='images/user_image.png')
     categories = models.CharField(max_length = 200)
-    date = models.DateField(default=timezone.now())
+    date = models.DateField(default=timezone.now)
 
+# Notes..............................
 class NoteCourse(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -196,3 +197,35 @@ class Ebook(models.Model):
 
     def __str__(self):
         return self.title
+
+# classRoom ........................
+
+# class ClassRommNotification(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     from_ = course=models.ForeignKey(User,on_delete=models.CASCADE)
+#     subject = models.CharField(max_length=50)
+#     date = models.DateField(default=timezone.now)
+#     file = models.FileField(upload_to='ebooks')
+
+#     def __str__(self):
+#         return self.from_
+
+# class ClassRoomWorks(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     from_ = course=models.ForeignKey(User,on_delete=models.CASCADE)
+#     work = models.CharField(max_length=50)
+#     date = models.DateField(default=timezone.now)
+#     file = models.FileField(upload_to='ebooks')
+
+#     def __str__(self):
+#         return self.from_
+
+# class Notes(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     title = models.CharField(max_length=100)
+#     subject = models.CharField(max_length=50)
+#     course = models.ForeignKey(NoteCourse, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to='Notes')
+
+#     def __str__(self):
+#         return self.title

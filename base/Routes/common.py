@@ -110,8 +110,7 @@ def chat_home(request):
 
 def chat_room(request, room):
     username = request.GET.get('username') # henry
-    room_details = Room.objects.filter(name=room)
-    print(room_details)
+    room_details = Room.objects.get(name=room)
     return render(request, 'chat_room/room.html', {
 
         'username': username,

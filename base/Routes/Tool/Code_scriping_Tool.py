@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from googlesearch import search
+
 
 def get_image_url(keyword):
     url = f"https://www.google.com/search?q={keyword}&tbm=isch"
@@ -10,23 +12,12 @@ def get_image_url(keyword):
     image_tags = soup.find_all('img')
     image_url = image_tags[0]['src']
     return image_url
-# import requests
-# from bs4 import BeautifulSoup
 
+def get_answer_from_given_link(question_url):
 
-
-
-def get_answer_from_given_link():
-    # The URL of the Stack Overflow question to scrape
-    question_url = 'https://stackoverflow.com/questions/66860376/how-to-scrape-example-code-for-a-given-question'
-
-    # Send a GET request to the question URL
     response = requests.get(question_url)
 
-    # Parse the HTML content of the response using BeautifulSoup
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    # Find the question title element and print it
+    soup = BeautifulSoup(response.content, 'html.parser')    
     question_title = soup.find('a', class_='question-hyperlink').get_text()
     print('Question:', question_title)
 
@@ -37,13 +28,10 @@ def get_answer_from_given_link():
     for i, code_block in enumerate(code_blocks):
         print(f'\nExample code {i+1}:')
         print(code_block.get_text())
-from googlesearch import search
 
-def get_stackoverflow_link(question):
-    # The question to search for
+def get_stackoverflow_link(question,site='stackoverflow.com'):
 
-    # The number of search results to consider
-    num_results = 10
+    num_results = 50
 
     stackoverflow_link=""
     # Search Google for the question and get the top search results
@@ -51,12 +39,10 @@ def get_stackoverflow_link(question):
 
     # Loop through the search results and find the Stack Overflow link
     for result in search_results:
-        if 'geeksforgeeks.org' in result:
+        if site in result:
             stackoverflow_link = result
             break
 
-    # Print the Stack Overflow link
-    print(f'Stack Overflow link: {stackoverflow_link}')
-
-get_stackoverflow_link("add two numbers")
+    return stackoverflow_link
+# print('answer',get_stackoverflow_link("add two numbers"))
 

@@ -12,7 +12,9 @@
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    <link href=
+    "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+              rel="stylesheet">
     <title>StudyKit</title>
 
     <!-- Bootstrap core CSS -->
@@ -307,36 +309,51 @@ https://templatemo.com/tm-565-onix-digital
     </div>
   </div>
 
+
+
   <div id="subscribe" class="subscribe">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="inner-content">
             <div class="row">
-              <div class="col-lg-10 offset-lg-1">
+              <div class="col-lg-10 offset-lg-1" style="    display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              flex-wrap: wrap;">
                 <h2>Get closer through video conferences.</h2>
-                <form style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-direction: row;
-            "id="subscribe" action="" method="get">
-                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Enter the code" required="">
-                 <button  type="submit" id="join_video"  class="main-button ">Join the meeting</button>
-                </form>
-                <br>
-                <form style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-direction: row;
-            "id="subscribe" action="" method="get">
-                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Create a meeting code" required="">
-                 <button  type="submit" id="form-submit" class="main-button ">Generate</button>
-                </form>
+                <div style="
+                margin-top: 32px;
+            "  class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+                      <h5 class="text-xl font-medium text-gray-900 dark:text-white">Generate The Meet Code</h5>
+                      <div style="display: flex;
+                      justify-items: end;
+                      align-items: center;
+                      justify-content: space-around;">
+                          <input type="text" name="room" placeholder="You can copy the Room code here.." id="Generate"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" disabled>
+                          <button onclick="copyToClipboard()" ><svg id="svg_type" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M9 18q-.825 0-1.413-.588T7 16V4q0-.825.588-1.413T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.588 1.413T18 18H9Zm-4 4q-.825 0-1.413-.588T3 20V7q0-.425.288-.713T4 6q.425 0 .713.288T5 7v13h10q.425 0 .713.288T16 21q0 .425-.288.713T15 22H5Z"/></svg></button>
+                      </div>
+                      <button onclick="gen()" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Generate Code</button>
+                </div>
+
+                <div style="
+                margin-top: 32px;
+            " class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+                  <form class="space-y-6" id="form">
+                      <h5 class="text-xl font-medium text-gray-900 dark:text-white">Join the meeting here</h5>
+                      <div>
+                          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter RoomId</label>
+                          <input type="text" name="room" placeholder="Enter a room name..."  style="text-transform:uppercase" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                      </div>
+                      <div>
+                          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your name</label>
+                          <input name="name" placeholder="Enter your name..."  style="text-transform:uppercase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                      </div>
+                      <input type="submit" value="Join Stream" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -350,25 +367,56 @@ https://templatemo.com/tm-565-onix-digital
             <div class="row">
               <div class="col-lg-10 offset-lg-1">
                 <h2>Get closer through chatting community.</h2>
-                <form style="
+                <form id="post-form" method="POST" action="chat_home/checkview" style="    display: flex;
+                padding: 11px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 flex-direction: row;
-            "id="subscribe" action="" method="get">
-                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Enter the room code" required="">
-                 <button  type="submit" id="form-submit" class="main-button ">Join the room</button>
-                </form>
+                width: 100%;
+                background: white;
+                height: 34%;
+                border-radius: 38px;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;">
+                {% csrf_token %}
+                  <input id="input1" placeholder="Enter RoomCode" class="form-control" aria-label="With textarea" type="text" name="room_name" id="room_name" style="margin-top: 10px">
+                  <input id="input2" placeholder="Enter Name" class="form-control" aria-label="With textarea" type="text" name="username" id="username" style="margin-top: 10px">
+                 <input type="submit" style="padding: 10px;
+                 background-color: #03a4ed;
+                 border-radius: 16px; margin-top:1px;"  id="form-submit" value="Join the room" class="main-button ">
+              </form>
                 <br>
-                <form style="
+                <div style="
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 flex-direction: row;
             "id="subscribe" action="" method="get">
-                  <input type="text" name="website" style="    margin-bottom: 17px;" id="website" placeholder="Create a room code" required="">
-                 <button  type="submit" id="form-submit" class="main-button ">Generate</button>
-                </form>
+
+                <div style="    display: flex;
+                padding: 11px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;
+                width: 100%;
+                background: white;
+                height: 34%;
+                border-radius: 38px;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;">
+                  <input type="text" name="room" placeholder="Here you can get the room code...." id="Generate1" style="    margin-top: 3px;" disabled >
+                  <button onclick="copyToClipboard1()" ><svg id="svg_type1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M9 18q-.825 0-1.413-.588T7 16V4q0-.825.588-1.413T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.588 1.413T18 18H9Zm-4 4q-.825 0-1.413-.588T3 20V7q0-.425.288-.713T4 6q.425 0 .713.288T5 7v13h10q.425 0 .713.288T16 21q0 .425-.288.713T15 22H5Z"/></svg></button>
+                </div>
+                  <button style="background-color: #03a4ed;
+                  border: 2px solid white;
+                  height: 47px;
+                  border-radius: 21px;
+                  padding: 10px;" onclick="gen1()" >Generate</button>
+                </div>
               </div>
             </div>
           </div>
@@ -793,6 +841,7 @@ https://templatemo.com/tm-565-onix-digital
   <script src="{%  static 'home/assets//js/animation.js' %}"></script>
   <script src="{%  static 'home/assets//js/imagesloaded.js' %}"></script>
   <script src="{%  static 'home/assets//js/custom.js' %}"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
   <script>
     function join_class(){
@@ -817,5 +866,121 @@ https://templatemo.com/tm-565-onix-digital
         }
     });
   </script>
+  <script>
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = e.target.room.value.toUpperCase()
+        let name = e.target.name.value
+
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('name', name)
+
+        window.open('/room/', '_self')
+    }
+
+
+
+    form.addEventListener('submit', handleSubmit)
+
+    function generateRandomString(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return result;
+    }
+    function gen(){
+      let obj = document.getElementById('Generate');
+      obj.value = generateRandomString(10);
+    }
+    let count = 0;
+    function copyToClipboard() {
+      const svgElement = document.getElementById('svg_type');
+      count = count+1;
+      console.log(count)
+      if(count%2 == 0){
+        svgElement.setAttribute('fill', 'red');
+      }else{
+        svgElement.setAttribute('stroke', 'blue');
+      }
+
+      let text = document.getElementById('Generate').value;
+      // Create a new <textarea> element and set its value to the text we want to copy
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+
+      // Make sure the <textarea> is hidden from view
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+
+      // Add the <textarea> element to the DOM
+      document.body.appendChild(textarea);
+
+      // Select the text in the <textarea>
+      textarea.select();
+
+      // Copy the selected text to the clipboard
+      document.execCommand('copy');
+
+      // Remove the <textarea> element from the DOM
+      document.body.removeChild(textarea);
+    }
+    function gen1(){
+      let obj = document.getElementById('Generate1');
+      obj.value = generateRandomString(10);
+    }
+    function copyToClipboard1() {
+      const svgElement = document.getElementById('svg_type1');
+      count = count+1;
+      console.log(count)
+      if(count%2 == 0){
+        svgElement.setAttribute('fill', 'red');
+      }else{
+        svgElement.setAttribute('stroke', 'blue');
+      }
+
+      let text = document.getElementById('Generate1').value;
+      // Create a new <textarea> element and set its value to the text we want to copy
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+
+      // Make sure the <textarea> is hidden from view
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+
+      // Add the <textarea> element to the DOM
+      document.body.appendChild(textarea);
+
+      // Select the text in the <textarea>
+      textarea.select();
+
+      // Copy the selected text to the clipboard
+      document.execCommand('copy');
+
+      // Remove the <textarea> element from the DOM
+      document.body.removeChild(textarea);
+    }
+
+    function join_room(){
+      let text = document.getElementById('chat_room').value;
+      window.location.replace('chat_room/'+text);
+
+    }
+
+
+</script>
 </body>
 </html>

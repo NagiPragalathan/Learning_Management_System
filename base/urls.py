@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView,LoginView
 
 from .Routes.common import *
+from .Routes.tool import *
 from .Routes.staff import *
 from .Routes.students import *
 from .Routes.study import *
@@ -24,6 +25,10 @@ def Make_Join(Componets):
     return OutComponets
 
 # Urls............................
+
+tools = [
+     path('trans',translate_),
+]
 
 common = [
     path('home', home),
@@ -52,7 +57,7 @@ videochat = [
 
 chatroom = [
     path('chat_home/', chat_home),
-    path('<str:room>/', chat_room, name="chat_room"),
+    path('chat/<str:room>/', chat_room, name="chat_room"), # problem...................
     path('chat_home/checkview', checkview, name="checkview"),
     path('send', send, name="send"),
     path('getMessages/<str:room>/', getMessages, name="getMessages"),
@@ -62,7 +67,7 @@ chatroom = [
 classroom = [
     path('class_room',home_classroom),
     path('message/<str:room>/',chatgetMessages, name="message"),
-    path('classroom/<str:pk>/<str:class_id>',nave_home_classroom),
+    path('<str:pk>/<str:class_id>',nave_home_classroom),
     path('add_class',add_class),
     path("save_added_class",save_add_class),
 ]
@@ -173,7 +178,7 @@ note = [
 ]
 
 
-urlpatterns.extend(Make_Join([note,gallery_,blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
+urlpatterns.extend(Make_Join([tools,note,gallery_,blog_url,common,admin,chatroom,classroom,videochat,studet,teacher,exam]))
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

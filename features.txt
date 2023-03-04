@@ -6,8 +6,21 @@ blog
 attendes
 mark update
 mcq
-Tools 
+Tools                                                                       
 Events = { update }
 chatbot
 dynamic forms
 
+New ideas :-
+
+google search
+wikkipidea
+cources
+auto code generation
+
+
+class room :
+
+1. Homework assaign ->{ admin:[tab1->(assaign homework with pic and text, assaign homework with text only), tab2->()]}
+
+to connect meet,chat,notes
