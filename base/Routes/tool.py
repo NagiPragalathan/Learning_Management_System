@@ -39,15 +39,15 @@ def translate_(request):
 
 def convert_text(request):
     if request.method == 'POST':
+        filename = os.path.join(BASE_DIR,"generated_files/audio_files/output.mp3")
+        os.remove(filename)
         text = request.POST['text']
         language = detect(text)
         tts = gTTS(text=text, lang=language)
-        filename = os.path.join(BASE_DIR,"generated_files/audio_files/output.mp3")
         tts.save(filename)
         with open(filename, 'rb') as f:
             response = HttpResponse(f.read(), content_type='audio/mpeg')
             response['Content-Disposition'] = 'attachment; filename="output.mp3"'
-            os.remove(filename) # to remove the file................
             return response
     return render(request, 'tools/text_to_audio.html')
 
@@ -198,3 +198,40 @@ def convert_jpg_to_pdf(request):
         shutil.rmtree(temp_dir)
 
     return render(request, 'tools/convert_jpg_to_pdf.html')
+
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.core.files.storage import FileSystemStorage
+from PIL import Image
+import pytesseract
+from docx import Document
+from docx.shared import Inches
+
+
+def convert_to_word(request):
+    if request.method == 'POST' and request.FILES['images']:
+        # Get the uploaded images
+        images = request.FILES.getlist('images')
+
+        # Create a new Word document
+        document = Document()
+
+        # Loop through each image and convert to text using OCR
+        for image in images:
+            img = Image.open(image)
+            text = pytesseract.image_to_string(img)
+
+            # Add the text to the Word document
+            document.add_paragraph(text)
+
+        # Save the Word document
+        document.save('converted_doc.docx')
+
+        # Serve the file for download
+        with open('converted_doc.docx', 'rb') as doc:
+            response = HttpResponse(doc.read(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            response['Content-Disposition'] = 'attachment; filename=converted_doc.docx'
+            return response
+
+    return render(request, 'tools/convert_jpg_to_word.html')

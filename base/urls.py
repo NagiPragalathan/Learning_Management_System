@@ -35,6 +35,7 @@ tools = [
      path('convert_pdf_to_excel',convert_pdf_to_excel),
      path('convert_excel_to_pdf',convert_excel_to_pdf),
      path('convert_jpg_to_pdf',convert_jpg_to_pdf),
+     path('convert_to_word',convert_to_word),
 ]
 
 common = [

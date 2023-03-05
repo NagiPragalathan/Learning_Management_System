@@ -11,3 +11,9 @@ pyttsx3
 pydub
 langdetect
 fpdf
+
+pytesseract 
+docx 
+python-docx 
+Pillow
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert to Word</title>
+</head>
+<body>
+    <h1>Convert Images to Word</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="images" multiple>
+        <br>
+        <button type="submit">Convert</button>
+    </form>
+</body>
+</html>
