@@ -28,6 +28,13 @@ def Make_Join(Componets):
 
 tools = [
      path('trans',translate_),
+     path('convert_text',convert_text),
+     path('wikipedia_summary',wikipedia_summary),
+     path('convert_docx_to_pdf',convert_docx_to_pdf),
+     path('convert_pdf_to_docx',convert_pdf_to_docx),
+     path('convert_pdf_to_excel',convert_pdf_to_excel),
+     path('convert_excel_to_pdf',convert_excel_to_pdf),
+     path('convert_pdf_to_jpg',convert_pdf_to_jpg),
 ]
 
 common = [

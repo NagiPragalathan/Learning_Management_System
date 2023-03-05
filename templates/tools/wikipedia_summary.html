@@ -1,0 +1,30 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Wikipedia Summary</title>
+</head>
+<body>
+	<form method="post">
+		{% csrf_token %}
+		<label for="keyword">Enter a keyword:</label>
+		<input type="text" name="keyword" id="keyword">
+		<label for="keyword">Enter a keyword:</label>
+		<input type="number" name="sentence" id="sentence">
+		<br>
+		<button type="submit" name="action" value="view">View Summary</button>
+		<button type="submit" name="action" value="download">Download Summary</button>
+	</form>
+	<p>
+		{% if summary %}
+			<h1>Summary :</h1>
+			<summary>
+				{{ summary }}
+			</summary>
+		{% endif %}
+	</p>
+</body>
+</html>
+
+{% endblock content %}

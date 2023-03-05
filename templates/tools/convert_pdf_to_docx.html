@@ -1,0 +1,20 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Convert PDF to Word</title>
+  </head>
+  <body>
+    <h1>Convert PDF to Word</h1>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="pdf_file" accept=".pdf">
+      <br><br>
+      <button type="submit">Convert</button>
+    </form>
+  </body>
+</html>
+
+{% endblock content %}

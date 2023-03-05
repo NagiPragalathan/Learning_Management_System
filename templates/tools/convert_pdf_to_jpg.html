@@ -1,0 +1,16 @@
+<!-- convert_pdf_to_jpg.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert PDF to JPG</title>
+</head>
+<body>
+    <h1>Convert PDF to JPG</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="pdf_file" required>
+        <button type="submit">Convert</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Audio Converter</title>
+</head>
+<body>
+    <h1>Text to Audio Converter</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="text">Text:</label>
+        <textarea name="text" id="text" rows="5" cols="50"></textarea>
+        <br>
+        <label for="language">Language:</label>
+        <select name="language" id="language">
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+            <!-- add more language options as needed -->
+        </select>
+        <br>
+        <button type="submit">Convert and Download</button>
+    </form>
+</body>
+</html>
+
+{% endblock content %}
+
+
+
+
+
+

@@ -1,6 +1,5 @@
 import gtts
-from googletrans import Translator as tra
-
+from googletrans import Translator 
 try:
     import pywhatkit as kit
 except:
@@ -9,24 +8,23 @@ import requests
 from bs4 import BeautifulSoup
 from bing_image_downloader import downloader
 
-
 class kit:
     
     def transe(self, Text : str, TextLang : str, cvtTo : str ):
         try :
-            translator = tra()
+            translator = Translator()
             output : str = translator.translate(Text, src = TextLang, dest = cvtTo)
             return output
         except : 
             return "404-error"
 
-    # def dec(self, Text : str ,To_lang : str):
-    #     try :
-    #         translator : Translator = Translator(to_lang = To_lang)
-    #         translation : str = translator.translate(Text)
-    #         return translation
-    #     except :
-    #         return "404-Error try again"
+    def dec(self, Text : str ,To_lang : str):
+        try :
+            translator : Translator = Translator(to_lang = To_lang)
+            translation : str = translator.translate(Text)
+            return translation
+        except :
+            return "404-Error try again"
 
     def textTOVoice(self, Text : str, langu : str, FileName : str, slow : bool = False):
         print("run")
@@ -98,6 +96,9 @@ class kit:
 
 
 a=kit()
+
+print(a.transe('hello','en','ta'))
+
 # print(a.scrping("c++",6))
 #print(a.KeyWordToAudio("iron man",2,"iron.mp3"))
 # print(a.KeyWordToimage("c++",4,"/home/nagipragalathan/Desktop/StudyKit/static/cources"))

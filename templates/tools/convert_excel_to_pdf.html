@@ -1,0 +1,18 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert Excel to PDF</title>
+</head>
+<body>
+    <h1>Convert Excel to PDF</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="excel_file">Select Excel file to convert:</label>
+        <input type="file" name="excel_file" id="excel_file"><br><br>
+        <input type="submit" value="Convert to PDF">
+    </form>
+</body>
+</html>
+{% endblock content %}

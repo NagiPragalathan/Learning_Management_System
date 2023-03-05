@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Convert PDF to Excel</title>
+</head>
+<body>
+	<h1>Convert PDF to Excel</h1>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<label for="pdf_file">Select a PDF file to convert:</label>
+		<input type="file" name="pdf_file" required>
+		<br>
+		<button type="submit">Convert to Excel</button>
+	</form>
+</body>
+</html>

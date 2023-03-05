@@ -6,3 +6,8 @@ tzdata==2021.5
 openai
 bing_image_downloader
 pywhatkit
+googletrans==3.1.0a0
+pyttsx3
+pydub
+langdetect
+fpdf
