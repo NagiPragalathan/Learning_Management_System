@@ -5,13 +5,47 @@
 <head>
 	<title>Wikipedia Summary</title>
 </head>
+<style>
+	#card {
+		border: 4px solid black;
+width: 400px;
+height: 250px;
+background-color: #e1ebe4;
+border-radius: 10px;
+box-shadow: 0 0 20px rgba(14, 13, 13, 0.2);
+padding: 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+}
+#card1{
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 10px;
+
+}
+
+h2 {
+font-size: 24px;
+margin-bottom: 50px;
+}
+
+
+</style>
 <body>
+	<div id="card1"><br><br>
+		<div id="card">
+			<h2>Wikipedia to Summary</h2>
 	<form method="post">
 		{% csrf_token %}
 		<label for="keyword">Enter a keyword:</label>
 		<input type="text" name="keyword" id="keyword">
-		<label for="keyword">Enter a keyword:</label>
+		<label for="keyword">No of Para:</label>
 		<input type="number" name="sentence" id="sentence">
+		<br>
 		<br>
 		<button type="submit" name="action" value="view">View Summary</button>
 		<button type="submit" name="action" value="download">Download Summary</button>
@@ -24,6 +58,8 @@
 			</summary>
 		{% endif %}
 	</p>
+</div>
+</div>
 </body>
 </html>
 
