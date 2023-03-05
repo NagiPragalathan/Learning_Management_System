@@ -16,6 +16,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
+from PIL import Image
+import tempfile
+
 
 def translate_(request):
         text = request.POST.get('text')
@@ -155,3 +158,43 @@ def convert_excel_to_pdf(request):
         return response
 
     return render(request, 'tools/convert_excel_to_pdf.html')
+
+
+
+def convert_images_to_pdf(images):
+    filename = tempfile.mktemp(".pdf")
+    c = canvas.Canvas(filename)
+    for image in images:
+        img = Image.open(image)
+        width, height = img.size
+        c.setPageSize((width, height))
+        c.drawImage(image, 0, 0, width, height)
+        c.showPage()
+        img.close()
+    c.save()
+    return filename
+
+def convert_jpg_to_pdf(request):
+    if request.method == 'POST':
+        files = request.FILES.getlist('file')
+        if len(files) == 0:
+            return HttpResponse("No images selected")
+        temp_dir = tempfile.mkdtemp()
+        for f in files:
+            with open(os.path.join(temp_dir, f.name), 'wb+') as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+
+        # Convert images to PDF
+        pdf_file = convert_images_to_pdf([os.path.join(temp_dir, f.name) for f in files])
+
+        # Serve the PDF file for download
+        with open(pdf_file, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename=converted.pdf'
+            return response
+
+        # Delete temporary files
+        shutil.rmtree(temp_dir)
+
+    return render(request, 'tools/convert_jpg_to_pdf.html')

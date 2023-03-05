@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Convert JPG to PDF</title>
+</head>
+<body>
+    <h1>Convert JPG to PDF</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file">Select JPG files to upload:</label>
+        <input type="file" id="file" name="file" accept=".jpg, .jpeg" multiple required>
+        <br><br>
+        <button type="submit">Convert and Download PDF</button>
+    </form>
+</body>
+</html>
