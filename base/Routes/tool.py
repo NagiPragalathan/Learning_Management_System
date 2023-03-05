@@ -18,7 +18,8 @@ from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from PIL import Image
 import tempfile
-
+from docx import Document
+from docx.shared import Inches
 
 def translate_(request):
         text = request.POST.get('text')
@@ -199,12 +200,6 @@ def convert_jpg_to_pdf(request):
 
     return render(request, 'tools/convert_jpg_to_pdf.html')
 
-
-from django.shortcuts import render, HttpResponse
-from PIL import Image
-import io
-from docx import Document
-from docx.shared import Inches
 
 def convert_jpg_to_word(request):
     if request.method == 'POST' and request.FILES['files']:
