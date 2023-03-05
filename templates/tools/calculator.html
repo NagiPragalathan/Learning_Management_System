@@ -102,5 +102,123 @@
 </div>
 </body>
 </html>
+<script>
+    const calculatorScreen = document.querySelector('.w-full .text-6xl');
+    const buttons = document.querySelectorAll('.w-full .outline-none');
+    let prevNumber = '';
+    let calculationOperator = '';
+    let currentNumber = '0';
+    let shouldResetScreen = false;
 
+    function resetCalculator() {
+    prevNumber = '';
+    calculationOperator = '';
+    currentNumber = '0';
+    shouldResetScreen = false;
+    updateScreen('0');
+    }
+
+    function updateScreen(number) {
+    calculatorScreen.textContent = number;
+    }
+
+    function handleInput(input) {
+    if (isNaN(input)) {
+        handleSymbol(input);
+    } else {
+        handleNumber(input);
+    }
+    }
+
+    function handleNumber(numberString) {
+    if (currentNumber === '0' || shouldResetScreen) {
+        currentNumber = numberString;
+        shouldResetScreen = false;
+    } else {
+        currentNumber += numberString;
+    }
+    updateScreen(currentNumber);
+    }
+
+    function handleSymbol(symbol) {
+    switch (symbol) {
+        case 'C':
+        resetCalculator();
+        break;
+        case '+/-':
+        currentNumber = currentNumber.charAt(0) === '-' ? currentNumber.slice(1) : '-' + currentNumber;
+        updateScreen(currentNumber);
+        break;
+        case '%':
+        currentNumber = parseFloat(currentNumber) / 100;
+        updateScreen(currentNumber);
+        break;
+        case '+':
+        case '-':
+        case '÷':
+        case '⨉':
+        handleMath(symbol);
+        break;
+        case '=':
+        handleEqual();
+        break;
+        default:
+        break;
+    }
+    }
+
+    function handleMath(operator) {
+    if (currentNumber === '') return;
+    if (prevNumber !== '') {
+        const result = calculate();
+        prevNumber = result;
+        updateScreen(result);
+    } else {
+        prevNumber = currentNumber;
+        currentNumber = '';
+    }
+    calculationOperator = operator;
+    shouldResetScreen = true;
+    }
+
+    function calculate() {
+    const number1 = parseFloat(prevNumber);
+    const number2 = parseFloat(currentNumber);
+    if (isNaN(number1) || isNaN(number2)) return '';
+    let result = '';
+    switch (calculationOperator) {
+        case '+':
+        result = number1 + number2;
+        break;
+        case '-':
+        result = number1 - number2;
+        break;
+        case '÷':
+        result = number1 / number2;
+        break;
+        case '⨉':
+        result = number1 * number2;
+        break;
+        default:
+        break;
+    }
+    return result.toString();
+    }
+
+    function handleEqual() {
+        if (prevNumber === '') return;
+        const result = calculate();
+        prevNumber = '';
+        currentNumber = result;
+        updateScreen(result);
+        shouldResetScreen = true;
+    }
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            handleInput(button.textContent);
+        });
+    });
+
+</script>
 {% endblock %}

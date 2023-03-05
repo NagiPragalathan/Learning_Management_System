@@ -21,6 +21,11 @@ import tempfile
 from docx import Document
 from docx.shared import Inches
 
+
+def calculator(request):
+    return render(request, 'tools/calculator.html')
+
+
 def translate_(request):
         text = request.POST.get('text')
         source_lang = request.POST.get('source_lang')
