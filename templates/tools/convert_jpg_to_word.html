@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Convert to Word</title>
+    <meta charset="UTF-8">
+    <title>Convert JPGs to Word</title>
 </head>
 <body>
-    <h1>Convert Images to Word</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h1>Convert JPGs to Word</h1>
+    <form action="convert_jpg_to_word" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="images" multiple>
-        <br>
-        <button type="submit">Convert</button>
+        <input type="file" name="files" multiple>
+        <br><br>
+        <input type="submit" value="Convert">
     </form>
 </body>
 </html>

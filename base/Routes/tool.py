@@ -200,38 +200,39 @@ def convert_jpg_to_pdf(request):
     return render(request, 'tools/convert_jpg_to_pdf.html')
 
 
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.files.storage import FileSystemStorage
+from django.shortcuts import render, HttpResponse
 from PIL import Image
-import pytesseract
+import io
 from docx import Document
 from docx.shared import Inches
 
-
-def convert_to_word(request):
-    if request.method == 'POST' and request.FILES['images']:
+def convert_jpg_to_word(request):
+    if request.method == 'POST' and request.FILES['files']:
         # Get the uploaded images
-        images = request.FILES.getlist('images')
-
+        images = request.FILES.getlist('files')
+        
         # Create a new Word document
         document = Document()
-
-        # Loop through each image and convert to text using OCR
-        for image in images:
-            img = Image.open(image)
-            text = pytesseract.image_to_string(img)
-
-            # Add the text to the Word document
-            document.add_paragraph(text)
-
-        # Save the Word document
-        document.save('converted_doc.docx')
-
-        # Serve the file for download
-        with open('converted_doc.docx', 'rb') as doc:
-            response = HttpResponse(doc.read(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-            response['Content-Disposition'] = 'attachment; filename=converted_doc.docx'
+        
+        # Loop through the images and add them to the document
+        for img in images:
+            # Open the image and convert it to a stream
+            image = Image.open(img)
+            stream = io.BytesIO()
+            image.save(stream, format='png')
+            stream.seek(0)
+            
+            # Add the image to the document
+            document.add_picture(stream, width=Inches(6))
+        
+        # Save the document
+        filename = 'images.docx'
+        document.save(filename)
+        
+        # Download the document
+        with open(filename, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
             return response
-
+    
     return render(request, 'tools/convert_jpg_to_word.html')
