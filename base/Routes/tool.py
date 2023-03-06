@@ -30,8 +30,11 @@ def translate_(request):
         source_lang = request.POST.get('source_lang')
         target_lang = request.POST.get('target_lang')
         print(source_lang,target_lang)
-        translator = Translator()
-        translation = translator.translate(text, src=source_lang, dest=target_lang)
+        try:
+            translator = Translator()
+            translation = translator.translate(text, src=source_lang, dest=target_lang)
+        except:
+            translation=""
         context = {
             'text': text,
             'src_lang': source_lang,
