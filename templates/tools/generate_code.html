@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Code</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="keyword">Enter keyword:</label>
+        <input type="text" id="keyword" name="keyword"><br><br>
+        <input type="submit" value="Generate">
+    </form>
+
+    {% if answer %}
+        <br><br>
+        <pre>{{ answer }}</pre>
+    {% endif %}
+</body>
+</html>

@@ -5,13 +5,19 @@ from googlesearch import search
 
 def get_image_url(keyword):
     url = f"https://www.google.com/search?q={keyword}&tbm=isch"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    image_tags = soup.find_all('img')
-    image_url = image_tags[0]['src']
-    return image_url
+
+    # Make a GET request to the URL and get the HTML content
+    response = requests.get(url)
+    html_content = response.content
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    image_urls = set()
+    for img in soup.find_all('img'):
+        img_url = img.get('src')
+        if img_url:
+            image_urls.add(img_url)
+    return list(image_urls)
 
 def get_answer_from_given_link(question_url):
 

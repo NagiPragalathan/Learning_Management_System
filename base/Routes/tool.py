@@ -20,11 +20,10 @@ from PIL import Image
 import tempfile
 from docx import Document
 from docx.shared import Inches
-
+from .Tool.Code_scriping_Tool import get_image_url
 
 def calculator(request):
     return render(request, 'tools/calculator.html')
-
 
 def translate_(request):
         text = request.POST.get('text')
@@ -236,3 +235,136 @@ def convert_jpg_to_word(request):
             return response
     
     return render(request, 'tools/convert_jpg_to_word.html')
+
+def cgpa_calculator(request):
+    if request.method == 'POST':
+        total_credits = 0
+        total_weighted_points = 0
+        for i in range(1, 9): # Assuming a maximum of 8 subjects
+            credit_field = 'credit' + str(i)
+            grade_field = 'grade' + str(i)
+            credits = int(request.POST.get(credit_field, 0))
+            grade_points = get_grade_points(request.POST.get(grade_field, ''))
+            total_credits += credits
+            total_weighted_points += credits * grade_points
+        try:
+            cgpa = round(total_weighted_points / total_credits, 2)
+            context = {'cgpa': cgpa,'len':[i for i in range(1,10)]}
+        except:
+            context = {'cgpa': 'cgpa','len':[i for i in range(1,10)]}
+            print("error/...")
+        return render(request, 'tools/cgpa_calculator.html', context)
+    else:
+        return render(request, 'tools/cgpa_calculator.html', context)
+
+def get_grade_points(grade):
+    if grade == 'S':
+        return 10
+    elif grade == 'A':
+        return 9
+    elif grade == 'B':
+        return 8
+    elif grade == 'C':
+        return 7
+    elif grade == 'D':
+        return 6
+    elif grade == 'E':
+        return 5
+    else:
+        return 0
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+def get_subject(request):
+    if request.method == 'POST':
+        num = request.POST.get('number')
+        print(type(int(num)))
+        return render(request, 'tools/gpa_calculator.html', { 'num_sub': [ i for i in range(1,int(num)+1) ] })
+        
+    return render(request, 'tools/num_of_sub.html')
+
+
+def gpa_calculator(request):
+        credits = request.POST.getlist('credits')
+        grades = request.POST.getlist('grades')
+        
+        total_credits = sum(map(int, credits))
+        total_grade_points = 0
+        
+        for i in range(len(credits)):
+            grade_point = 0
+            if grades[i] == 'A+':
+                grade_point = 4.0
+            elif grades[i] == 'A':
+                grade_point = 4.0
+            elif grades[i] == 'A-':
+                grade_point = 3.7
+            elif grades[i] == 'B+':
+                grade_point = 3.3
+            elif grades[i] == 'B':
+                grade_point = 3.0
+            elif grades[i] == 'B-':
+                grade_point = 2.7
+            elif grades[i] == 'C+':
+                grade_point = 2.3
+            elif grades[i] == 'C':
+                grade_point = 2.0
+            elif grades[i] == 'C-':
+                grade_point = 1.7
+            elif grades[i] == 'D+':
+                grade_point = 1.3
+            elif grades[i] == 'D':
+                grade_point = 1.0
+            elif grades[i] == 'F':
+                grade_point = 0.0
+            total_grade_points += int(credits[i]) * grade_point
+        try:
+            gpa = total_grade_points / total_credits
+        except:
+            gpa=0.0
+        context = {'gpa': round(gpa, 2)}
+        return render(request, 'tools/gpa_calculator.html', context)
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import render
+import pywhatkit as kit
+
+def handwriting_converter(request):
+    if request.method == 'POST':
+        # Get input text from form
+        input_text = request.POST.get('input_text')
+
+        # Create a filename for the image
+        filename = 'handwriting.png'
+
+        # Generate image using Pywhatkit
+        kit.text_to_handwriting(input_text, os.path.join(settings.MEDIA_ROOT, filename))
+
+        # Open image file
+        with open(os.path.join(settings.MEDIA_ROOT, filename), 'rb') as f:
+            response = HttpResponse(f.read(), content_type="image/png")
+            response['Content-Disposition'] = 'attachment; filename=' + filename
+            return response
+    else:
+        return render(request, 'tools/handwriting.html')
+
+def keyword_to_image(request):
+    if request.method == 'POST':
+        keyword = request.POST.get('keyword')
+        urls = get_image_url(keyword)
+        print(keyword,urls)
+        return render(request, 'tools/keyword_to_image.html',{'image_urls':urls})
+    return render(request, 'tools/keyword_to_image.html')
+
+# views.py
+
+from django.shortcuts import render
+
+def video_meeting(request):
+    return render(request, 'tools/video_meeting.html')
+

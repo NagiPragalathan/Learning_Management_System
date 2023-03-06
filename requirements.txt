@@ -16,4 +16,5 @@ pytesseract
 docx 
 python-docx 
 Pillow
-
+PyPDF2
+django-downloadview

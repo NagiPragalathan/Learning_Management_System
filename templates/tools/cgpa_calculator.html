@@ -1,0 +1,47 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CGPA Calculator</title>
+</head>
+<body>
+    <h1>CGPA Calculator</h1>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Credits</th>
+                <th>Grade</th>
+            </tr>
+            {% for i in len %}
+            <tr>
+                <td>Subject {{ i }}</td>
+                <td><input type="text" name="credit{{ i }}" size="3" maxlength="1"></td>
+                <td>
+                    <select name="grade{{ i }}">
+                        <option value="">Select grade</option>
+                        <option value="S">S (10)</option>
+                        <option value="A">A (9)</option>
+                        <option value="B">B (8)</option>
+                        <option value="C">C (7)</option>
+                        <option value="D">D (6)</option>
+                        <option value="E">E (5)</option>
+                        <option value="U">U (0)</option>
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"><input type="submit" value="Calculate CGPA"></td>
+            </tr>
+        </table>
+    </form>
+    {% if cgpa %}
+    <h2>Your CGPA is: {{ cgpa }}</h2>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

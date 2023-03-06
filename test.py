@@ -1,4 +1,5 @@
-from docx2pdf import convert
+# importing the module
+import pywhatkit
 
-# Convert a single file
-convert("C:/Users/nagip/Desktop/Learning_Management_System/Nocode.docx", "output.pdf")
+pywhatkit.info("python", lines = 4)
+print("\nSuccessfully Searched")

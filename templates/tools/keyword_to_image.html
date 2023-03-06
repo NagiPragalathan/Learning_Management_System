@@ -1,0 +1,44 @@
+{% extends "student_base.html" %}
+
+{% block Componet %}
+
+    <link href=
+"https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+          rel="stylesheet">
+    <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-bottom: 61px;">
+        <form method="post" class="w-full max-w-sm">
+		{% csrf_token %}
+
+            <h1 style="    font-size: 29px;
+            margin-bottom: 35px;
+            margin-top: 32px;">Search any types of image here</h1>
+
+            <div class="flex items-center border-b border-teal-500 py-2">
+            <input type="text" name="keyword" placeholder="enter the number of subjects" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Jane Doe" aria-label="Full name">
+            <button type="submit" value="submit" style="border: 1px solid #00ff6685; width: 109px; border-radius: 9px; height: 39px;" type="button">
+                Search
+            </button>
+            </div>
+        </form>
+    </div>
+    <section class="overflow-hidden text-neutral-700">
+        <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+          <div class="-m-1 flex flex-wrap md:-m-2">
+            {% for i in image_urls %}
+            <div class="flex w-1/3 flex-wrap">
+              <div class="w-full p-1 md:p-2">
+                <img
+                  alt="{{ i }}"
+                  class="block h-full w-full rounded-lg object-cover object-center"
+                  src="{{ i }}" />
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+      </section>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Text to Handwriting Converter</title>
+  </head>
+  <body>
+    <h1>Text to Handwriting Converter</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="text">Enter your text:</label><br>
+      <textarea id="text" name="text" rows="10" cols="50"></textarea><br>
+      <input type="submit" value="Convert">
+    </form>
+  </body>
+</html>
