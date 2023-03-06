@@ -1,16 +1,56 @@
+{% extends "student_base.html" %}
+
+{% block Componet %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Convert JPGs to Word</title>
+    <style>
+        #card {
+			border: 4px solid black;
+  width: 400px;
+  height: 250px;
+  background-color: #e1ebe4;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(14, 13, 13, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+#card1{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px;
+	
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 50px;
+}
+
+
+
+    </style>
 </head>
 <body>
-    <h1>Convert JPGs to Word</h1>
+    <div id="card1"><br><br>
+        <div id="card">
+    <h2>Convert JPGs to Word</h2>
     <form action="convert_jpg_to_word" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="files" multiple>
         <br><br>
         <input type="submit" value="Convert">
     </form>
+        </div>
+    </div>
+
 </body>
 </html>
+{% endblock content %}
