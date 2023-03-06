@@ -36,29 +36,33 @@ margin-bottom: 50px;
 
 </style>
 <body>
-	<div id="card1"><br><br>
+	<div id="card1" style="display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    flex-direction: column;"><br><br>
 		<div id="card">
 			<h2>Wikipedia to Summary</h2>
 	<form method="post">
 		{% csrf_token %}
 		<label for="keyword">Enter a keyword:</label>
 		<input type="text" name="keyword" id="keyword">
-		<label for="keyword">No of Para:</label>
+		<label for="keyword">Sentence Count :</label>
 		<input type="number" name="sentence" id="sentence">
 		<br>
 		<br>
 		<button type="submit" name="action" value="view">View Summary</button>
 		<button type="submit" name="action" value="download">Download Summary</button>
 	</form>
-	<p>
-		{% if summary %}
-			<h1>Summary :</h1>
-			<summary>
-				{{ summary }}
-			</summary>
-		{% endif %}
-	</p>
 </div>
+<p>
+	{% if summary %}
+		<h1>Summary :</h1>
+		<summary>
+			{{ summary }}
+		</summary>
+	{% endif %}
+</p>
 </div>
 </body>
 </html>
