@@ -4,15 +4,49 @@
 <html>
 <head>
     <title>Convert Excel to PDF</title>
+    <style>
+        #card {
+			border: 4px solid black;
+  width: 400px;
+  height: 250px;
+  background-color: #e1ebe4;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(14, 13, 13, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+#card1{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px;
+	
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 50px;
+}
+
+
+    </style>
 </head>
 <body>
-    <h1>Convert Excel to PDF</h1>
+    <div id="card1"><br><br>
+        <div id="card">
+    <h2>Convert Excel to PDF</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="excel_file">Select Excel file to convert:</label>
+        <label style="font-size: 16px;" for="excel_file">Select Excel file to convert:</label>
         <input type="file" name="excel_file" id="excel_file"><br><br>
         <input type="submit" value="Convert to PDF">
     </form>
+</div>
+</div>
 </body>
 </html>
 {% endblock content %}
