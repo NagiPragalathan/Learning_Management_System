@@ -440,7 +440,7 @@ https://templatemo.com/tm-565-onix-digital
                 flex-direction: row;
             "id="subscribe" >
                   <input type="text" id="join_class" placeholder="Enter the code" style="    margin-bottom: 17px;" required="">
-                  <button id="join_class_btn" onclick="join_class()" class="main-button ">Join the meeting</button>
+                  <button id="join_class_btn" onclick="join_class()" class="main-button ">Join ClassRoom</button>
                 </div>
               </div>
             </div>
@@ -846,7 +846,7 @@ https://templatemo.com/tm-565-onix-digital
   <script>
     function join_class(){
       let inp_val = $("#join_class").val();
-      window.location.href = "join/"+inp_val;
+      window.location.href = "classroom/join/"+inp_val;
     }
   // Acc
     $(document).on("click", ".naccs .menu div", function() {

@@ -593,7 +593,7 @@
                         {{ j.discription }}
                       </p>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" onclick="add_sub('{{ j.subject_code }}')" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                        <button type="button" onclick="add_sub('{{ j.subject_code }}')" class="btn btn-outline-primary btn-sm mb-0">View Class</button>
                         <div class="avatar-group mt-2">
                           <a href=" {% static 'javascript:;' %} " class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
                             <img alt="Image placeholder" src=" {% static 'admin/assets/img/team-1.jpg' %} ">
@@ -713,7 +713,7 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     function add_sub(id) {
-            window.location.href = 'class_room/'+id ;
+            window.location.href = 'classroom/class_room/'+id ;
     }
   
     function rm_sub(id) {

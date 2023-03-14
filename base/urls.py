@@ -83,7 +83,7 @@ chatroom = [
 classroom = [
     path('class_room',home_classroom),
     path('message/<str:room>/',chatgetMessages, name="message"),
-    path('<str:pk>/<str:class_id>',nave_home_classroom),
+    path('classroom/<str:pk>/<str:class_id>',nave_home_classroom),
     path('add_class',add_class),
     path("save_added_class",save_add_class),
 ]
