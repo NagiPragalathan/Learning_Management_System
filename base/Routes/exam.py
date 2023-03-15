@@ -11,7 +11,7 @@ from base import models as SMODEL
 from .Forms import teacher_forms as TFORM
 from .Forms import student_forms as SFORM
 from django.contrib.auth.models import User
-
+from .common import staff_home,student_home
 
 def home_view(request):
     if request.user.is_authenticated:
@@ -26,13 +26,15 @@ def is_student(user):
     return user.groups.filter(name='STUDENT').exists()
 
 def afterlogin_view(request):
-    if is_student(request.user):      
-        return redirect('student/student-dashboard')
+    if is_student(request.user):
+        # return redirect('student/student-dashboard')
+        return redirect(student_home)
                 
     elif is_teacher(request.user):
         accountapproval=TMODEL.Teacher.objects.all().filter(user_id=request.user.id,status=True)
         if accountapproval:
-            return redirect('teacher/teacher-dashboard')
+            # return redirect('teacher/teacher-dashboard')
+            return redirect(staff_home)
         else:
             return render(request,'teacher/teacher_wait_for_approval.html')
     else:

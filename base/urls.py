@@ -47,7 +47,8 @@ tools = [
 ]
 
 common = [
-    path('home', home),
+    path('student_home', student_home),
+    path('staff_home', staff_home),
     path('login_',login_page),
     path('login_to_home',login_into_home),
     path('personal_detials',Personal_detials),
@@ -125,7 +126,7 @@ exam = [
     path('contactus',  contactus_view),
     path('afterlogin',  afterlogin_view,name='afterlogin'),
     path('adminclick',  adminclick_view),
-    path('adminlogin', LoginView.as_view(template_name='exam/adminlogin.html'),name='adminlogin'),
+    path('adminlogin', LoginView.as_view(template_name='login/login.html'),name='adminlogin'),
     path('admin-dashboard',  admin_dashboard_view,name='admin-dashboard'),
     path('admin-teacher',  admin_teacher_view,name='admin-teacher'),
     path('admin-view-teacher',  admin_view_teacher_view,name='admin-view-teacher'),

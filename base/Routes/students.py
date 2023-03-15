@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from base import models
 from .Forms import student_forms
+from ..models import Users
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -26,6 +27,11 @@ def student_signup_view(request):
             student=studentForm.save(commit=False)
             student.user=user
             student.save()
+
+            add_user = Users(user_name=user.username, mail_id=user.email, password=user.password, role='4')
+            add_user.save()
+
+            
             my_student_group = Group.objects.get_or_create(name='STUDENT')
             my_student_group[0].user_set.add(user)
         return HttpResponseRedirect('studentlogin')
@@ -94,7 +100,7 @@ def calculate_marks_view(request):
         result.marks=total_marks
         result.exam=course
         result.student=student
-        result.save()
+        result.save() 
 
         return HttpResponseRedirect('view-result')
 
