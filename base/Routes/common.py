@@ -12,35 +12,48 @@ from django.http import JsonResponse
 from .Tool.blogTool import get_images
 
 
-def login_page(request):
-    return render(request,"login/login.html")
+# def login_page(request):
+#     return render(request,"login/login.html")
 
-def login_into_home(request):
-    user_name = request.POST.get('usr_name')
-    password = request.POST.get('password')
-    print(user_name,password)
-    user = authenticate(username=user_name, password=password)
-    print(user)
-    if user is not None:
-        login(request, user)
-        user_detials = Users.objects.get(mail_id = user_name)
-        role = user_detials.role
-        usr_name = user_detials.user_name
-        if role == 3 :
-            return redirect('/home')
-        elif role == 2:
-            return redirect('/home')
-        elif role == 1:
-            return redirect('/home')
-    else:
-        return render(request,"login/login.html")
-    
-@login_required()
-def home(request):
+# def login_into_home(request):
+#     user_name = request.POST.get('usr_name')
+#     password = request.POST.get('password')
+#     print(user_name,password)
+#     user = authenticate(username=user_name, password=password)
+#     print(user)
+#     for i  in Users.objects.all():
+#         print(i.user_name,i.mail_id)
+#     if user is not None:
+#         # login(request, user)
+#         user_detials = Users.objects.get(user_name = user_name)
+#         role = user_detials.role
+#         if role == 3 :
+#             return redirect('/home')
+#         elif role == 2:
+#             return redirect('/home')
+#         elif role == 1:
+#             return redirect('/home')
+#         if role == 4 :
+#             return redirect('/home')
+#     else:
+#         return render(request,"login/login.html")
+
+
+def student_home(request):
     usr_id = request.user.id
     usr_obj = User.objects.get(id=usr_id)
-    name = Users.objects.get(mail_id=usr_obj.username)
+    name = Users.objects.get(user_name=usr_obj.username)
+    # faculty_details = Faculty_details.objects.get(user_name=name.user_name)
+    faculty_details=""
+    return render(request,"home/index.html",{'user_name':usr_obj.username,'detials':faculty_details})
+
+@login_required()
+def staff_home(request):
+    usr_id = request.user.id
+    usr_obj = User.objects.get(id=usr_id)
+    name = Users.objects.get(user_name=usr_obj.username)
     faculty_details = Faculty_details.objects.get(user_name=name.user_name)
+    faculty_details=""
     return render(request,"home/index.html",{'user_name':usr_obj.username,'detials':faculty_details})
 
 
