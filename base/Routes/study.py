@@ -9,12 +9,20 @@ from .Tool.Tools import get_user_mail,get_user_name,get_user_role,get_user_obj
 
 def nave_home_classroom(request,pk,class_id):
     if pk == "join":
-            print(get_user_mail(request))
-            if class_enrolled.objects.filter(mail_id=get_user_mail(request),subject_code = class_id).exists():
-                print("connection passed...")
-            else:
-                class_en = class_enrolled(mail_id = get_user_mail(request),subject_code = class_id )
-                class_en.save()
+            
+            # print(get_user_mail(request))
+            try:
+                if class_enrolled.objects.filter(mail_id=get_user_mail(request),subject_code = class_id).exists():
+                    print("connection passed...")
+                else:
+                    class_en = class_enrolled(mail_id = get_user_mail(request),subject_code = class_id )
+                    class_en.save()
+            except:
+                if class_enrolled.objects.filter(mail_id=request.user.email,subject_code = class_id).exists():
+                    print("connection passed...")
+                else:
+                    class_en = class_enrolled(mail_id = request.user.email,subject_code = class_id )
+                    class_en.save()
             peoples=[]
             people = class_enrolled.objects.filter(subject_code = class_id)
             for i in people:
@@ -31,7 +39,15 @@ def nave_home_classroom(request,pk,class_id):
                 new_room = Room.objects.create(name=class_id)
                 new_room.save()
                 return render(request, 'class_room/classroom.html',{'people':peoples,"detail":detials})
-            
+    elif pk == "attendes":
+            peoples=[]
+            people = class_enrolled.objects.filter(subject_code = class_id)
+            for i in people:
+                print(i.class_id,i.mail_id)
+                person_obj = Users.objects.get(mail_id=i.mail_id)
+                peoples.append(person_obj)
+            detials = ClassRooms.objects.get(subject_code = class_id)
+            return render(request, 'class_room/attendes.html',{'people':peoples,"detail":detials})
     else :
         peoples=[]
         people = class_enrolled.objects.filter(subject_code = class_id)
@@ -57,8 +73,11 @@ def home_classroom(request):
     img = {}
     dep = []
     sem = [1,2,3,4,5,6,7,8]
+    try:
+        enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
+    except:
+        enroll_classes = class_enrolled.objects.filter(mail_id=request.user.email)
 
-    enroll_classes = class_enrolled.objects.filter(mail_id=get_user_mail(request))
     for i in enroll_classes:
         classrooms = ClassRooms.objects.filter(subject_code=i.subject_code)
         print(i.class_id)
@@ -76,8 +95,10 @@ def home_classroom(request):
                 path = "..\\static\\" + i.class_image.split('static\\')[1] + "\\" + item[0]
                 print(path,item)
                 img[i.subject_code] = path
-    return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem_':sem,'dep':dep,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
-        
+    try:
+        return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem_':sem,'dep':dep,"user_name":get_user_name(request),"User_role":get_user_role(request),"usr_img":get_user_obj(request)})
+    except:
+        return render(request, 'class_room/class_room_home.html',{'classes':classes,'img':img,'sem_':sem,'dep':dep,"user_name":request.user.username})
 
 def add_class(request):
     return render(request, 'class_room/new_add.html')
@@ -99,3 +120,5 @@ def save_add_class(request):
 
     return render(request, 'class_room/new_add.html')
 
+def attendes(request):
+    return render(request,'class_room/attendes.html')

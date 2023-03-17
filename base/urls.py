@@ -49,8 +49,8 @@ tools = [
 common = [
     path('student_home', student_home),
     path('staff_home', staff_home),
-    path('login_',login_page),
-    path('login_to_home',login_into_home),
+    # path('login_',login_page),
+    # path('login_to_home',login_into_home),
     path('personal_detials',Personal_detials),
 
 ]
@@ -76,6 +76,7 @@ chatroom = [
     path('chat_home/', chat_home),
     path('chat/<str:room>/', chat_room, name="chat_room"), # problem...................
     path('chat_home/checkview', checkview, name="checkview"),
+    path('chat_home/Ncheckview', Ncheckview, name="Ncheckview"),
     path('send', send, name="send"),
     path('getMessages/<str:room>/', getMessages, name="getMessages"),
 ]
@@ -87,6 +88,7 @@ classroom = [
     path('classroom/<str:pk>/<str:class_id>',nave_home_classroom),
     path('add_class',add_class),
     path("save_added_class",save_add_class),
+    path("attendes",attendes),
 ]
 
 studet = [

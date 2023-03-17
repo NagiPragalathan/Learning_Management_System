@@ -142,6 +142,17 @@ def checkview(request):
         new_room.save()
         return redirect('/chat'+'/'+room+'/?username='+username)
 
+def Ncheckview(request):
+    room = request.GET['room_name']
+    username = request.GET['username']
+
+    if Room.objects.filter(name=room).exists():
+        return redirect('/chat'+'/'+room+'/?username='+username)
+    else:
+        new_room = Room.objects.create(name=room)
+        new_room.save()
+        return redirect('/chat'+'/'+room+'/?username='+username)
+
 def send(request):
     message = request.POST['message']
     username = request.POST['username']
