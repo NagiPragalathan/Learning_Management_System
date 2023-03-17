@@ -8,6 +8,7 @@ def get_user_mail(request):
     usr_obj = User.objects.get(id=usr_id)
     faculty_details = Faculty_details.objects.get(mail=usr_obj.username)
     return faculty_details.mail
+
 def get_user_name(request):
     usr_id = request.user.id
     usr_obj = User.objects.get(id=usr_id)
