@@ -10,8 +10,6 @@ from .Tool.Code_scriping_Tool import get_image_url
 
 def nave_home_classroom(request, pk, class_id):
     if pk == "join":
-
-        # print(get_user_mail(request))
         try:
             if class_enrolled.objects.filter(mail_id=get_user_mail(request), subject_code=class_id).exists():
                 print("connection passed...")
@@ -20,11 +18,11 @@ def nave_home_classroom(request, pk, class_id):
                     mail_id=get_user_mail(request), subject_code=class_id)
                 class_en.save()
         except:
-            if class_enrolled.objects.filter(mail_id=request.user.email, subject_code=class_id).exists():
+            if class_enrolled.objects.filter(mail_id=request.user.username, subject_code=class_id).exists():
                 print("connection passed...")
             else:
                 class_en = class_enrolled(
-                    mail_id=request.user.email, subject_code=class_id)
+                    mail_id=request.user.username, subject_code=class_id)
                 class_en.save()
         peoples = []
         people = class_enrolled.objects.filter(subject_code=class_id)
