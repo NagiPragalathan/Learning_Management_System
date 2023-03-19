@@ -35,10 +35,22 @@ def teacher_signup_view(request):
             teacher = teacherForm.save(commit=False)
             teacher.user = user
             teacher.save()
-
-            add_user = Users(user_name=user.username, mail_id=user.email,
-                             password=user.password, role='4')
-            add_user.save()
+            if teacher.role == 'hod':
+                add_user = Users(user_name=user.username,
+                                 mail_id=user.username, password=user.password, role='2')
+                add_user.save()
+                current_user = Users.objects.get(mail_id=user.username)
+                Fac_del = Faculty_details(user_name=user.username, mail=user.username,
+                                          role=current_user, id_number=0, name=str(user.first_name)+" "+str(user.last_name))
+                Fac_del.save()
+            elif teacher.role == 'staff':
+                add_user = Users(user_name=user.username,
+                                 mail_id=user.username, password=user.password, role='3')
+                add_user.save()
+                current_user = Users.objects.get(mail_id=user.username)
+                Fac_del = Faculty_details(user_name=user.username, mail=user.username,
+                                          role=current_user, id_number=0, name=str(user.first_name)+" "+str(user.last_name))
+                Fac_del.save()
 
             my_teacher_group = Group.objects.get_or_create(name='TEACHER')
             my_teacher_group[0].user_set.add(user)

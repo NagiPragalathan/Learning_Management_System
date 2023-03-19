@@ -15,4 +15,20 @@ class TeacherUserForm(forms.ModelForm):
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = models.Teacher
-        fields = ['address', 'mobile', 'profile_pic']
+        fields = ['address', 'mobile', 'profile_pic', 'role']
+    DEPARTMENT_CHOICES = (
+        ('none', 'Selected Staff'),
+        ('CSE', 'Computer Science and Engineering'),
+        ('EEE', 'Electrical and Electronics Engineering'),
+        ('ME', 'Mechanical Engineering'),
+        # Add more choices here as needed
+    )
+
+    ROLE_CHOICES = (
+        ('student', 'Student'),
+        ('staff', 'Staff'),
+        ('hod', 'Hod'),
+        ('admin', 'Admin'),
+    )
+    department = forms.ChoiceField(choices=DEPARTMENT_CHOICES)
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)

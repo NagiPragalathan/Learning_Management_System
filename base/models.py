@@ -21,7 +21,7 @@ class Users(models.Model):
     id = models.IntegerField(primary_key=True)
     user_name = models.CharField(max_length=200)
     mail_id = models.CharField(max_length=200, unique=True)
-    password = models.CharField(max_length=200, unique=True)
+    password = models.CharField(max_length=200)
     role = models.IntegerField()   # roles {1,2,3} 1(Admin), 2(HOD), 3(Staff)
 
 
@@ -123,6 +123,9 @@ class Student(models.Model):
         upload_to='profile_pic/Student/', null=True, blank=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
+    joinned_year = models.DateField(default=timezone.now)
+    role_no = models.IntegerField()
+    department = models.CharField(max_length=40)
 
     @property
     def get_name(self):
@@ -142,7 +145,9 @@ class Teacher(models.Model):
         upload_to='profile_pic/Teacher/', null=True, blank=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
+    role = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=False)
+    department = models.CharField(max_length=40)
     salary = models.PositiveIntegerField(null=True)
 
     @property
