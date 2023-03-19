@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from ..models import Faculty_details, Users, Room, ClassRooms, class_enrolled, Attendees
+from ..models import Faculty_details, Users, Room, ClassRooms, class_enrolled, Attendees, Student, Teacher
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from bing_image_downloader import downloader
 from LMS.settings import BASE_DIR
 from .Tool.Tools import get_user_mail, get_user_name, get_user_role, get_user_obj
@@ -11,25 +12,32 @@ from .Tool.Code_scriping_Tool import get_image_url
 def nave_home_classroom(request, pk, class_id):
     if pk == "join":
         try:
-            if class_enrolled.objects.filter(mail_id=get_user_mail(request), subject_code=class_id).exists():
+            if class_enrolled.objects.filter(user_id=request.user.id, subject_code=class_id).exists():
                 print("connection passed...")
             else:
                 class_en = class_enrolled(
-                    mail_id=get_user_mail(request), subject_code=class_id)
+                    user_id=request.user.id, mail_id=get_user_mail(request), subject_code=class_id)
                 class_en.save()
         except:
-            if class_enrolled.objects.filter(mail_id=request.user.username, subject_code=class_id).exists():
+            if class_enrolled.objects.filter(user_id=request.user.id, subject_code=class_id).exists():
                 print("connection passed...")
             else:
                 class_en = class_enrolled(
-                    mail_id=request.user.username, subject_code=class_id)
+                    user_id=request.user.id, mail_id=request.user.username, subject_code=class_id)
                 class_en.save()
         peoples = []
         people = class_enrolled.objects.filter(subject_code=class_id)
         for i in people:
             print(i.class_id, i.mail_id)
-            person_obj = Users.objects.get(mail_id=i.mail_id)
-            peoples.append(person_obj)
+            person_obj = User.objects.get(id=i.user_id)
+            try:
+                obj = Student.objects.get(user=person_obj)
+                print(obj.role_no)
+                peoples.append(obj)
+            except:
+                pass
+                # obj = Teacher.objects.get(user=person_obj) if database are clear it will work properly
+                # print(obj.role)
         detials = ClassRooms.objects.get(subject_code=class_id)
 
         # create new chat room..........
@@ -45,10 +53,17 @@ def nave_home_classroom(request, pk, class_id):
         people = class_enrolled.objects.filter(subject_code=class_id)
         for i in people:
             print(i.class_id, i.mail_id)
-            person_obj = Users.objects.get(mail_id=i.mail_id)
-            peoples.append(person_obj)
+            person_obj = User.objects.get(id=i.user_id)
+            try:
+                obj = Student.objects.get(user=person_obj)
+                print(obj.role_no)
+                peoples.append(obj)
+            except:
+                pass
+                # obj = Teacher.objects.get(user=person_obj) if database are clear it will work properly
+                # print(obj.role)
         detials = ClassRooms.objects.get(subject_code=class_id)
-        print([str(i.user_name) for i in peoples])
+        # print("users", [str(i.username) for i in peoples])
         return render(request, 'class_room/attendes.html', {'people': [[j, i] for i, j in enumerate(peoples)], "ids": [str(i.id) for i in peoples], "detail": detials, "date": datetime.datetime.now().date()})
     else:
         peoples = []
