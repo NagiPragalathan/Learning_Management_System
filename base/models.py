@@ -241,6 +241,19 @@ class Ebook(models.Model):
         return self.title
 
 
+class EbookForClass(models.Model):
+    id = models.IntegerField(primary_key=True)
+    cover_image = models.CharField(max_length=100)
+    Class_id = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
+    subject = models.CharField(max_length=50)
+    course = models.ForeignKey(NoteCourse, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='ebooks')
+
+    def __str__(self):
+        return self.title
+
+
 class Attendees(models.Model):
     id = models.IntegerField(primary_key=True)
     class_id = models.CharField(max_length=100)

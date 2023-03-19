@@ -1,12 +1,10 @@
-from django.shortcuts import render
-from ..models import Faculty_details, Users, Room, ClassRooms, class_enrolled, Attendees, Student, Teacher
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from ..models import Faculty_details, Users, Room, ClassRooms, class_enrolled, Attendees, Student, Teacher, EbookForClass
 from django.contrib.auth.models import User
-from bing_image_downloader import downloader
-from LMS.settings import BASE_DIR
 from .Tool.Tools import get_user_mail, get_user_name, get_user_role, get_user_obj
 import datetime
 from .Tool.Code_scriping_Tool import get_image_url
+from .Forms.Notes_form import EbookClassForm
 
 
 def nave_home_classroom(request, pk, class_id):
@@ -75,14 +73,21 @@ def nave_home_classroom(request, pk, class_id):
             print(i.class_id, i.mail_id, i.subject_code)
         for i in people:
             print(i.class_id, i.mail_id, i.subject_code)
-            person_obj = Users.objects.get(mail_id=i.mail_id)
-            peoples.append(person_obj)
+            person_obj = User.objects.get(id=i.user_id)
+            try:
+                obj = Student.objects.get(user=person_obj)
+                print(obj.role_no)
+                peoples.append(obj)
+            except:
+                pass
+        books = EbookForClass.objects.filter(Class_id=class_id)
+
         if Room.objects.filter(name=class_id).exists():
-            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials})
+            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials, 'books': books})
         else:
             new_room = Room.objects.create(name=class_id)
             new_room.save()
-            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials})
+            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials, 'books': books})
 
 
 def home_classroom(request):
@@ -163,3 +168,40 @@ def update_attendes(request):
         for i in Attendees.objects.all():
             print(i.user_name, i.subject_states)
     return render(request, 'class_room/attendes.html')
+
+
+def add_class_notes(request, pk):
+    if request.method == 'POST':
+        form = EbookClassForm(request.POST, request.FILES)
+        if form.is_valid():
+            ebook = form.save(commit=False)
+            ebook.Class_id = pk
+            ebook.cover_image = get_image_url(ebook.title)
+            ebook.save()
+            return redirect('course_list')
+    else:
+        form = EbookClassForm()
+    return render(request, 'class_room/notes/add_notes.html', {'form': form, 'class_id': pk})
+
+
+def class_ebook_edit(request, pk):
+    ebook = get_object_or_404(EbookForClass, pk=pk)
+    if request.method == 'POST':
+        form = EbookClassForm(request.POST, request.FILES, instance=ebook)
+        if form.is_valid():
+            form.save()
+            return redirect('course_list')
+    else:
+        form = EbookClassForm(instance=ebook)
+    return render(request, 'class_room/notes/ebook_edit.html', {'form': form})
+
+
+def class_ebook_delete(request, pk):
+    ebook = get_object_or_404(EbookForClass, pk=pk)
+    ebook.delete()
+    return redirect('course_list')
+
+
+def class_book_list(request):
+    books = EbookForClass.objects.all()
+    return render(request, 'class_room/notes/ebook_list.html', {'books': books})

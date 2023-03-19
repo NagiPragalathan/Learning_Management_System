@@ -1,10 +1,18 @@
 from django import forms
-from ...models import Ebook,NoteCourse
+from ...models import Ebook, NoteCourse, EbookForClass
+
+
+class EbookClassForm(forms.ModelForm):
+    class Meta:
+        model = EbookForClass
+        fields = ['title', 'subject', 'course', 'file']
+
 
 class EbookForm(forms.ModelForm):
     class Meta:
         model = Ebook
         fields = ['title', 'subject', 'course', 'file']
+
 
 class CourseForm(forms.ModelForm):
     class Meta:

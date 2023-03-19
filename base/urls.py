@@ -95,6 +95,11 @@ classroom = [
     path("save_added_class", save_add_class),
     path("attendes", attendes),
     path("update_attendes", update_attendes),
+    path("add_class_notes/<str:pk>", add_class_notes),
+    path('class_ebook/book_list', class_book_list, name='class_book_list'),
+    path('class_ebook/<int:pk>/edit/', class_ebook_edit, name='class_ebook_edit'),
+    path('class_ebook/<int:pk>/delete/',
+         class_ebook_delete, name='class_ebook_delete'),
 ]
 
 studet = [

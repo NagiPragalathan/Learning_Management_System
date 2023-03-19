@@ -1,0 +1,18 @@
+{% extends 'teacher/teacherbase.html' %}
+
+{% block content %}
+<h1>Books</h1>
+<a href="class_ebook/add/">Add book</a>
+<ul>
+  {% for book in books %}
+  <li>
+    <a href="#">{{ book.title }}</a>
+    by {{ book.author }}
+    <a href="/class_ebook/{{ book.id }}/edit/">Edit</a>
+    <a href="/class_ebook/{{ book.id }}/delete/">Delete</a>
+  </li>
+  {% empty %}
+  <li>No books yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
