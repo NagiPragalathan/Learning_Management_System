@@ -541,17 +541,15 @@
                 {% for i in classes %}
                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
                   <div class="avatar me-3">
-                    {% for key, value in img.items %}
-                          {% if key == i.subject_code %}
-                            <img src=" {{ value }} " alt="{{ i.department }}" style="height: 50px;" class="border-radius-lg shadow">
-                          {% endif %}
-                    {% endfor  %}
+
+                            <img src=" {{ i.class_image }} " alt="{{ i.department }}" style="height: 50px;" class="border-radius-lg shadow">
+
                   </div>
                   <div class="d-flex align-items-start flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">{{ i.subject_code }}</h6>
                     <p class="mb-0 text-xs">{{ i.class_name }}</p>
                   </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" onclick="rm_sub('{{ i.subject_code }}')">Remove</a>
+                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" onclick="delete_class('{{ i.id }}')">Remove</a>
                 </li>
                 {% endfor %}
               </ul>
@@ -575,11 +573,7 @@
                   <div class="card card-blog card-plain">
                     <div class="position-relative">
                       <a class="d-block shadow-xl border-radius-xl">
-                        {% for key, value in img.items %}
-                          {% if key == j.subject_code %}
-                            <img src=" {{ value }} " alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                          {% endif %}
-                        {% endfor  %}
+                            <img src="{{ j.class_image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                       </a>
                     </div>
                     <div class="card-body px-1 pb-0">
@@ -705,6 +699,17 @@
   <script src=" {% static 'admin/assets/js/plugins/perfect-scrollbar.min.js' %} "></script>
   <script src=" {% static 'admin/assets/js/plugins/smooth-scrollbar.min.js' %} "></script>
   <script>
+    function delete_class(id){
+      const confirmation = confirm('Are you sure you want to Delete this Class Note{ if you delete the class can not retrive the data }?');
+  
+      if (confirmation) {
+        window.location.href = '/delete_class/'+id
+        console.log('Performing action...');
+      } else {
+        console.log('Action cancelled.');
+        }
+      }
+      
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
