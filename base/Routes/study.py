@@ -5,6 +5,15 @@ from .Tool.Tools import get_user_mail, get_user_name, get_user_role, get_user_ob
 import datetime
 from .Tool.Code_scriping_Tool import get_image_url
 from .Forms.Notes_form import EbookClassForm
+from base import models as TMODEL
+
+
+def is_teacher(user):
+    return user.groups.filter(name='TEACHER').exists()
+
+
+def is_student(user):
+    return user.groups.filter(name='STUDENT').exists()
 
 
 def nave_home_classroom(request, pk, class_id):
@@ -81,13 +90,35 @@ def nave_home_classroom(request, pk, class_id):
             except:
                 pass
         books = EbookForClass.objects.filter(Class_id=class_id)
+        if is_student(request.user):
+            obj = User.objects.get(id=request.user.id)
+            student_data = Student.objects.get(user=obj)
+            if Room.objects.filter(name=class_id).exists():
+                return render(request, 'class_room/student_class_room.html', {'student_data': student_data, 'people': peoples, "detail": detials, 'books': books})
+            else:
+                new_room = Room.objects.create(name=class_id)
+                new_room.save()
+                return render(request, 'class_room/student_class_room.html', {'student_data': student_data, 'people': peoples, "detail": detials, 'books': books})
 
-        if Room.objects.filter(name=class_id).exists():
-            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials, 'books': books})
+        elif is_teacher(request.user):
+            accountapproval = TMODEL.Teacher.objects.all().filter(
+                user_id=request.user.id, status=True)
+            if accountapproval:
+                if Room.objects.filter(name=class_id).exists():
+                    return render(request, 'class_room/student_class_room.html', {'people': peoples, "detail": detials, 'books': books})
+                else:
+                    new_room = Room.objects.create(name=class_id)
+                    new_room.save()
+                    return render(request, 'class_room/student_class_room.html', {'people': peoples, "detail": detials, 'books': books})
+            else:
+                return render(request, 'teacher/teacher_wait_for_approval.html')
         else:
-            new_room = Room.objects.create(name=class_id)
-            new_room.save()
-            return render(request, 'class_room/classroom.html', {'people': peoples, "detail": detials, 'books': books})
+            if Room.objects.filter(name=class_id).exists():
+                return render(request, 'class_room/student_class_room.html', {'people': peoples, "detail": detials, 'books': books})
+            else:
+                new_room = Room.objects.create(name=class_id)
+                new_room.save()
+                return render(request, 'class_room/student_class_room.html', {'people': peoples, "detail": detials, 'books': books})
 
 
 def home_classroom(request):
@@ -111,10 +142,33 @@ def home_classroom(request):
             classes.append(i)
             if i.department not in dep:
                 dep.append(i.department)
-    try:
-        return render(request, 'class_room/class_room_home.html', {'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": get_user_name(request), "User_role": get_user_role(request), "usr_img": get_user_obj(request)})
-    except:
-        return render(request, 'class_room/class_room_home.html', {'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": request.user.username})
+    if is_student(request.user):
+        obj = User.objects.get(id=request.user.id)
+        student_data = Student.objects.get(user=obj)
+        try:
+            return render(request, 'class_room/student_classroom.html', {'student_data': student_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": get_user_name(request), "User_role": get_user_role(request), "usr_img": get_user_obj(request)})
+        except:
+            return render(request, 'class_room/student_classroom.html', {'student_data': student_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": request.user.username})
+
+    elif is_teacher(request.user):
+        obj = User.objects.get(id=request.user.id)
+        teacher_data = Teacher.objects.get(user=obj)
+        teacher_data_1 = Faculty_details.objects.get(user_name=obj.username)
+        accountapproval = TMODEL.Teacher.objects.all().filter(
+            user_id=request.user.id, status=True)
+        if accountapproval:
+            try:
+                return render(request, 'class_room/staff_classroom.html', {'detail': teacher_data_1, 'teacher_data': teacher_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": get_user_name(request), "User_role": get_user_role(request), "usr_img": get_user_obj(request)})
+            except:
+                return render(request, 'class_room/staff_classroom.html', {'teacher_data': teacher_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": request.user.username})
+
+        else:
+            return render(request, 'teacher/teacher_wait_for_approval.html')
+    else:
+        try:
+            return render(request, 'class_room/class_room_home.html', {'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": get_user_name(request), "User_role": get_user_role(request), "usr_img": get_user_obj(request)})
+        except:
+            return render(request, 'class_room/class_room_home.html', {'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": request.user.username})
 
 
 def add_class(request):
