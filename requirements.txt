@@ -30,6 +30,5 @@ docx
 python-docx 
 Pillow
 PyPDF2
-django-downloadview
 psycopg2
 whitenoise
