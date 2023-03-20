@@ -202,7 +202,7 @@ def attendes(request):
     return render(request, 'class_room/attendes.html')
 
 
-def slter_attendes(request):
+# def slter_attendes(request):
 
 
 def update_attendes(request):
