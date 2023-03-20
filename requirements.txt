@@ -1,6 +1,6 @@
 agora-token-builder==1.0.0
 asgiref==3.4.1
-Django==3.0.5
+Django
 sqlparse==0.4.2
 tzdata==2021.5
 openai
@@ -33,4 +33,4 @@ Pillow
 PyPDF2
 django-downloadview
 psycopg2
-virtualenv
+whitenoise
