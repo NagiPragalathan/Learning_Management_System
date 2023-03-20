@@ -4,6 +4,7 @@ Django==4.0.1
 sqlparse==0.4.2
 tzdata==2021.5
 openai
+db-sqlite3
 bing_image_downloader
 pysqlite
 pywhatkit
