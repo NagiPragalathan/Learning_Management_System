@@ -4,9 +4,7 @@ Django==3.0.5
 sqlparse==0.4.2
 tzdata==2021.5
 openai
-db-sqlite3
 bing_image_downloader
-pysqlite
 pywhatkit
 googletrans==3.1.0a0
 pyttsx3
