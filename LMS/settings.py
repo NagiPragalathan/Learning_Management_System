@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app']
 
-
+DATABASES['DEFAULT'] = dj_database_url.config()
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,12 +89,12 @@ APPEND_SLASH = False
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'TfMNotJTQECrvREwpAPz',
-        'HOST': 'containers-us-west-205.railway.app',
-        'PORT': '8010',
+        'USER': 'postgres',
+        'PASSWORD': 'SQ2kH8awlzTvH7VULxhf',
+        'HOST': 'containers-us-west-125.railway.app',
+        'PORT': '6750',
     }
 }
 
@@ -164,3 +165,5 @@ EMAIL_RECEIVING_USER = ['to@gmail.com']
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATABASES_URL = "postgresql://postgres:SQ2kH8awlzTvH7VULxhf@containers-us-west-125.railway.app:6750/railway"
