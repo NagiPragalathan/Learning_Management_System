@@ -1,11 +1,9 @@
 agora-token-builder==1.0.0
 psycopg2-binary==2.9.5
-mysqlclient
 asgiref==3.4.1
 djongo
 dnspython
 Django
-mysql-connector-python
 bing_image_downloader
 pywhatkit
 googletrans==3.1.0a0

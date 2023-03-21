@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app']
 
-DATABASES['DEFAULT'] = dj_database_url.config()
+# DATABASES['DEFAULT'] = dj_database_url.config()
 # Application definition
 
 INSTALLED_APPS = [
