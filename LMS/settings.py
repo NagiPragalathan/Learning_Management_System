@@ -88,12 +88,12 @@ APPEND_SLASH = False
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.djongo',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
-        'USER': 'mongo',
-        'PASSWORD': 'FmDE0St6TmlxeVhCweTh',
-        'HOST': 'containers-us-west-149.railway.app',
-        'PORT': '7538',
+        'USER': 'root',
+        'PASSWORD': 'TfMNotJTQECrvREwpAPz',
+        'HOST': 'containers-us-west-205.railway.app',
+        'PORT': '8010',
     }
 }
 
