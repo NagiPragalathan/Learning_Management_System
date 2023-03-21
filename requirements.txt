@@ -1,9 +1,14 @@
 agora-token-builder==1.0.0
 psycopg2-binary==2.9.5
 asgiref==3.4.1
-djongo
+asgiref==3.5.2
+dj-database-url==1.0.0
+Django==3.2.16
+psycopg2-binary==2.9.5
+python-decouple==3.6
+pytz==2022.5
+sqlparse==0.4.3
 dnspython
-Django
 bing_image_downloader
 pywhatkit
 googletrans==3.1.0a0
