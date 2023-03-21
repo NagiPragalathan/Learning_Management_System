@@ -2,6 +2,7 @@
 
 echo " Build start ............." 
 
+pip install mysqlclient
 pip install -r requirements.txt
 pip install django
 pip install django-widget-tweaks
