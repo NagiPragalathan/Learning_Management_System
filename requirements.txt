@@ -1,6 +1,5 @@
 agora-token-builder==1.0.0
 psycopg2-binary==2.9.5
-asgiref==3.4.1
 asgiref==3.5.2
 dj-database-url==1.0.0
 Django==3.2.16
