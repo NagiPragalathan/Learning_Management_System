@@ -3,6 +3,8 @@
 echo " Build start ............." 
 
 pip install --upgrade pip
+sudo apt-get install libpq-dev
+pip install psycopg2-binary
 pip install -r requirements.txt
 pip install psycopg2
 pip install django
