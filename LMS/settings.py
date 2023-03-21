@@ -88,12 +88,12 @@ APPEND_SLASH = False
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'djongo',
         'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'SQ2kH8awlzTvH7VULxhf',
-        'HOST': 'containers-us-west-125.railway.app',
-        'PORT': '6750',
+        'USER': 'mongo',
+        'PASSWORD': 'FmDE0St6TmlxeVhCweTh',
+        'HOST': 'containers-us-west-149.railway.app',
+        'PORT': '7538',
     }
 }
 
