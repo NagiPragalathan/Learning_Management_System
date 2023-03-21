@@ -88,7 +88,7 @@ APPEND_SLASH = False
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE': 'django.db.backends.djongo',
         'NAME': 'railway',
         'USER': 'mongo',
         'PASSWORD': 'FmDE0St6TmlxeVhCweTh',
