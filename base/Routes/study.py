@@ -161,6 +161,7 @@ def home_classroom(request):
                 return render(request, 'class_room/staff_classroom.html', {'detail': teacher_data_1, 'teacher_data': teacher_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": get_user_name(request), "User_role": get_user_role(request), "usr_img": get_user_obj(request)})
             except:
                 return render(request, 'class_room/staff_classroom.html', {'teacher_data': teacher_data, 'classes': classes, 'img': img, 'sem_': sem, 'dep': dep, "user_name": request.user.username})
+
         else:
             return render(request, 'teacher/teacher_wait_for_approval.html')
     else:
