@@ -1,6 +1,5 @@
 # Learning Management System
 
-![LMS](lms.png)
 
 The Learning Management System (LMS) is a comprehensive web-based platform designed to facilitate online learning and collaboration. It offers a range of features and tools to enhance the educational experience for students and educators alike.
 
