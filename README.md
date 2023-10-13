@@ -48,3 +48,4 @@ Contributions to the Learning Management System project are welcome! If you woul
 ## License
 
 This project is licensed under the [MIT License](https://chat.openai.com/c/LICENSE).
+edited
